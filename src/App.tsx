@@ -6,17 +6,17 @@ import { Access } from './screens/Access'
 import { Fitness } from './screens/Fitness'
 import { Mind } from './screens/Mind'
 import { Onboarding } from './screens/Onboarding'
+import { Measure } from './screens/Measure'
 import { Plan } from './screens/Plan'
 import { SessionView } from './screens/SessionView'
 import { Settings } from './screens/Settings'
-import { Strokes } from './screens/Strokes'
 import { TestimonialPrompt } from './screens/TestimonialPrompt'
 import { Today } from './screens/Today'
 
 const tabs = [
   { id: 'hoy', label: 'Hoy' },
   { id: 'plan', label: 'Plan' },
-  { id: 'golpes', label: 'Golpes' },
+  { id: 'medir', label: 'Medir' },
   { id: 'fisico', label: 'Físico' },
   { id: 'mente', label: 'Mente' },
 ] as const
@@ -42,7 +42,7 @@ export default function App() {
   else if (open) body = <SessionView {...open} onClose={() => setOpen(null)} />
   else if (tab === 'hoy') body = <Today open={openSession} />
   else if (tab === 'plan') body = <Plan open={openSession} />
-  else if (tab === 'golpes') body = <Strokes />
+  else if (tab === 'medir') body = <Measure />
   else if (tab === 'fisico') body = <Fitness />
   else body = <Mind />
 

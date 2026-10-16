@@ -138,3 +138,14 @@ input:focus, textarea:focus, button:focus-visible { outline: 2px solid var(--bal
 .stars button.on { color: var(--ball); }
 .check-label { align-items: flex-start; }
 .check-label input { width: 20px; height: 20px; flex: none; margin-top: 2px; }
+
+.block { display: block; }
+.test-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; background: none; padding: 0; text-align: left; width: 100%; }
+.delta { font-weight: 800; padding: 4px 10px; border-radius: 999px; background: var(--surface-2); }
+.delta.up { background: var(--green); }
+.delta.down { background: var(--red); }
+.keys summary { cursor: pointer; font-weight: 700; color: var(--ball); }
+.keys ol, .steps { margin: 8px 0 0; padding-left: 20px; display: grid; gap: 6px; }
+.mode-note { background: var(--carbon); border-left: 4px solid var(--blue); border-radius: 8px; padding: 10px 12px; }
+.goal { color: var(--ball); font-weight: 500; }
+.entry { border-top: 1px solid #333; padding-top: 8px; display: grid; gap: 2px; }

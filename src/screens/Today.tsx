@@ -1,7 +1,7 @@
 import { weeks } from '../content/plan'
-import { describeVolume, scaleVolume } from '../content/volume'
+import { describeVolume, estimateMinutes, scaleVolume } from '../content/volume'
 import type { Session, Week } from '../content/types'
-import { doneToday, nextSession, streak, weekProgress } from '../lib/progress'
+import { doneToday, nextSession, streak, visibleExercises, weekProgress } from '../lib/progress'
 import { useAppState } from '../lib/store'
 
 export function Today({ open }: { open: (w: Week, s: Session) => void }) {
@@ -23,12 +23,8 @@ export function Today({ open }: { open: (w: Week, s: Session) => void }) {
 
   const { week, session } = next
   const p = weekProgress(s, week)
-  const totalMinutes = Math.round(
-    session.exercises.reduce((acc, ex) => {
-      const v = scaleVolume(ex, s.profile!.level)
-      return acc + (v.seconds ?? 45) * (v.sets ?? 1)
-    }, 0) / 60,
-  )
+  const exercises = visibleExercises(session, s.profile!.mode)
+  const minutes = estimateMinutes(exercises, s.profile!.level)
 
   return (
     <main className="screen">
@@ -43,14 +39,18 @@ export function Today({ open }: { open: (w: Week, s: Session) => void }) {
           {session.title}: {session.focus}
         </strong>
         <span className="muted small">
-          {session.exercises.length} ejercicios · unos {Math.max(5, totalMinutes)} min
+          {exercises.length} ejercicios · unos {minutes} min
         </span>
         <ul className="muted small">
-          {session.exercises.map((ex) => (
-            <li key={ex.id}>
-              {ex.name} · {describeVolume(scaleVolume(ex, s.profile!.level))}
-            </li>
-          ))}
+          {exercises.map((ex) => {
+            const v = describeVolume(scaleVolume(ex, s.profile!.level))
+            return (
+              <li key={ex.id}>
+                {ex.name}
+                {v && ` · ${v}`}
+              </li>
+            )
+          })}
         </ul>
         <span className="primary pill">Empezar</span>
       </button>

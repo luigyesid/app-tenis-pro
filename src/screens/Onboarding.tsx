@@ -40,7 +40,7 @@ export function Onboarding({ initial }: { initial?: { mode: Mode; level: Level }
         </button>
         <button className="choice" onClick={() => chooseLevel('intermedio')}>
           <strong>Intermedio</strong>
-          <span className="muted small">Pelotero con constancia y juego partidos</span>
+          <span className="muted small">Peloteo con constancia y juego partidos</span>
         </button>
       </div>
       <button className="link" onClick={() => setMode(null)}>

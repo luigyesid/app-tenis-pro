@@ -1,5 +1,5 @@
 import { weeks } from '../content/plan'
-import type { Session, Week } from '../content/types'
+import type { Mode, Session, Week } from '../content/types'
 import { today, type AppState } from './store'
 
 export const allSessions = weeks.flatMap((w) => w.sessions.map((s) => ({ week: w, session: s })))
@@ -40,4 +40,8 @@ export function doneToday(s: AppState) {
 /** Semana (4 u 8) cuyo testimonio toca pedir ahora, si hay alguna. */
 export function testimonialDue(s: AppState) {
   return [8, 4].find((n) => isWeekComplete(s, n) && !s.testimonialAsked.includes(n)) ?? null
+}
+
+export function visibleExercises(session: Session, mode: Mode) {
+  return session.exercises.filter((e) => !e.only || e.only === mode)
 }

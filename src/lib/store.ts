@@ -1,11 +1,17 @@
 import { useSyncExternalStore } from 'react'
 import type { Level, Mode } from '../content/types'
 
-export interface StrokeLog {
+export interface Measure {
+  testId: string
   date: string
-  strokeId: string
-  made: number
-  total: number
+  value: number
+}
+
+export interface DiaryEntry {
+  date: string
+  good: string
+  improve: string
+  rival: string
 }
 
 export interface AppState {
@@ -13,13 +19,15 @@ export interface AppState {
   profile?: { mode: Mode; level: Level }
   /** sessionId -> día en que se completó (YYYY-MM-DD). */
   done: Record<string, string>
-  strokeLogs: StrokeLog[]
+  /** Pruebas de la tabla de control (semana 1 vs semana 8). */
+  measures: Measure[]
+  diary: DiaryEntry[]
   /** Semanas (4 y 8) en las que ya se pidió el testimonio. */
   testimonialAsked: number[]
 }
 
 const KEY = 'tenispro:v2'
-const empty: AppState = { done: {}, strokeLogs: [], testimonialAsked: [] }
+const empty: AppState = { done: {}, measures: [], diary: [], testimonialAsked: [] }
 
 function load(): AppState {
   try {

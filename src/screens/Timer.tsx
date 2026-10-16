@@ -60,7 +60,7 @@ export function Timer({ seconds, sets = 1, rest = 30 }: { seconds: number; sets?
     <div className={`timer ${resting ? 'resting' : ''}`}>
       <div className="timer-time">{fmt(Math.max(0, left))}</div>
       <div className="muted small">
-        {finished ? '¡Listo!' : resting ? 'Descanso' : `Serie ${set} de ${sets}`}
+        {finished ? '¡Listo!' : resting ? 'Descanso' : sets > 1 ? `Serie ${set} de ${sets}` : running ? 'En marcha' : 'Listo para empezar'}
       </div>
       <div className="row">
         {finished ? (
