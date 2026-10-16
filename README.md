@@ -25,7 +25,8 @@ Todo el contenido está en `src/content/plan.ts` y sale del e-book "Tenis Pro en
    - `SUPABASE_URL` y `SUPABASE_SERVICE_ROLE_KEY` (solo para la función; nunca en la app)
    - `HOTMART_HOTTOK` (Hotmart › Herramientas › Webhook)
    - `ALLOWED_OFFERS=O107951429N` para que solo el Pack con app genere código
-   - `RESEND_API_KEY`, `EMAIL_FROM` y `APP_URL` para enviar el código por correo
+   - `GMAIL_USER` y `GMAIL_APP_PASSWORD` (contraseña de aplicación de Google) para enviar el código por correo desde Gmail. Con dominio propio se puede usar `RESEND_API_KEY` y `EMAIL_FROM` en su lugar.
+   - `APP_URL` (opcional) si la app vive en otra dirección que tenispro-app.netlify.app
 3. **Hotmart:** en Webhook (versión 2.0), apunta a `https://<tu-sitio>/.netlify/functions/hotmart-webhook` con los eventos de compra aprobada, completa, reembolsada, contracargo y cancelada.
 
 Para probar sin comprar, inserta un código a mano en la tabla `access_codes`.
