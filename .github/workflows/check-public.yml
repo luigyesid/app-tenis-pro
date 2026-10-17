@@ -8,6 +8,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          curl -s https://tenispro-app.netlify.app/landing/ | grep -ai -B2 -A8 'hud' | head -40 | sed 's/^/HTML /'
-          curl -s "https://tenispro-app.netlify.app/.netlify/scripts/hud?variant=public" -o /tmp/h.js; echo "JS bytes=$(wc -c </tmp/h.js)"
-          grep -aoE 'customElements\.define\("[^"]+"|localStorage[^;]{0,80}|data-[a-z-]*(hide|disable|badge)[a-z-]*|(hide|dismiss|disable)[A-Za-z]{0,30}|settings?[^;]{0,60}badge[^;]{0,60}' /tmp/h.js | sort -u | head -40 | sed 's/^/JS /'
+          curl -s "https://tenispro-app.netlify.app/.netlify/scripts/hud?variant=public" -o /tmp/h.js
+          grep -aoE '.{0,60}(STORE_KEY *=|createElement\(|attachShadow|\.id *=|setAttribute\("id"|appendChild|dismissal|variant|tier|upgrade|disable|opt.?out|data-nf-[a-z-]+).{0,90}' /tmp/h.js | head -60 | sed 's/^/JS /'
