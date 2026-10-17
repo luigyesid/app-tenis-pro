@@ -1,0 +1,13 @@
+name: Revisar acceso publico
+on:
+  push:
+    branches: [claude/project-thread-xzb392]
+    paths: ['.github/workflows/check-public.yml']
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          for u in https://tenispro-app.netlify.app/landing/ https://tenispro-app.netlify.app/ https://tenispro-app.netlify.app/landing/img/og.jpg https://deploy-preview-4--tenispro-app.netlify.app/landing/ https://deploy-preview-5--tenispro-app.netlify.app/; do
+            r=$(curl -s -o /tmp/b -w '%{http_code} %{url_effective}' -L "$u"); echo "RESULT $u -> $r $(grep -ao '<title>[^<]*' /tmp/b | head -1)"
+          done
