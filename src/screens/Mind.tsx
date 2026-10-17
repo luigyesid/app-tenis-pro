@@ -49,7 +49,9 @@ function Diary() {
     <section className="card stack diary">
       <div className="row between">
         <h3>Diario del partido</h3>
-        <span className="muted small">{s.diary.length} entradas</span>
+        <span className="muted small">
+          {s.diary.length} {s.diary.length === 1 ? 'entrada' : 'entradas'}
+        </span>
       </div>
       {writing ? (
         <form className="stack" onSubmit={save}>
@@ -86,7 +88,7 @@ function Diary() {
           .reverse()
           .map((d, i) => (
             <div key={i} className="entry small">
-              <span className="muted">{d.date}</span>
+              <span className="muted">{fmtDate(d.date)}</span>
               {d.good && <p>✓ {d.good}</p>}
               {d.improve && <p>→ {d.improve}</p>}
               {d.rival && <p>◎ {d.rival}</p>}
@@ -94,4 +96,9 @@ function Diary() {
           ))}
     </section>
   )
+}
+
+function fmtDate(iso: string) {
+  const d = new Date(`${iso}T12:00:00`)
+  return Number.isNaN(d.getTime()) ? iso : d.toLocaleDateString('es', { day: 'numeric', month: 'short' })
 }
