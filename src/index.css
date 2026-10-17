@@ -411,6 +411,7 @@ input:focus, textarea:focus, button:focus-visible, summary:focus-visible { outli
 /* ---------- Físico ---------- */
 .tabs-inline { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
 .tabs-inline::-webkit-scrollbar { display: none; }
+.tabs-inline { margin-right: -16px; padding-right: 16px; mask-image: linear-gradient(90deg, #000 85%, transparent); }
 .tabs-inline button { flex: none; border-radius: 999px; padding: 8px 16px; min-height: 44px; border: 1px solid var(--line); }
 .tabs-inline button.on { background: var(--ball); color: var(--carbon); font-weight: 700; border-color: var(--ball); }
 
@@ -418,7 +419,17 @@ input:focus, textarea:focus, button:focus-visible, summary:focus-visible { outli
 .mind-card { border-left: 4px solid var(--blue); }
 .diary { border-left: 4px solid var(--ball); }
 .steps li::marker { color: var(--ball); font-weight: 700; }
-.entry { border-top: 1px solid var(--line); padding-top: 8px; display: grid; gap: 2px; }
+.entry { border-top: 1px solid var(--line); padding-top: 8px; display: grid; gap: 4px; }
+.entry .link { min-height: 36px; padding: 4px 0; }
+.entry .confirm { gap: 6px; }
+.entry .confirm .pill-btn { min-height: 36px; padding: 6px 12px; flex: none; }
+.pill-btn.danger { background: var(--red); color: #fff; }
+.support-link { justify-self: start; color: var(--ball); text-decoration: none; }
+.support {
+  display: grid; gap: 10px; margin-top: 4px; padding: 12px 14px;
+  background: rgba(212, 225, 87, 0.08); border-radius: 14px; border: 1px solid rgba(212, 225, 87, 0.25);
+  animation: rise 300ms var(--ease-out);
+}
 
 /* ---------- Hoja y testimonios ---------- */
 .overlay {
@@ -487,3 +498,68 @@ input:focus, textarea:focus, button:focus-visible, summary:focus-visible { outli
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition-duration: 0ms !important; }
 }
+
+/* ---------- Ilustraciones de ejercicios ---------- */
+.ill {
+  width: 100%; max-height: 170px; display: block;
+  background: var(--carbon); border-radius: 14px;
+}
+.ill path, .ill circle, .ill ellipse, .ill rect { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.ill-body path { stroke: var(--text); stroke-width: 5; }
+.ill-body circle { fill: var(--text); stroke: none; }
+.ill-ghost path { stroke: var(--text); stroke-width: 5; opacity: 0.22; }
+.ill-ghost circle { fill: var(--text); opacity: 0.22; }
+.ill-ghost .ill-chair circle, .ill-ghost .ill-chair path { fill: none; stroke: var(--muted); opacity: 0.25; }
+.ill-chair circle, .ill-chair path { stroke: var(--muted); stroke-width: 3; }
+.ill-body .ill-chair circle { fill: none; stroke: var(--muted); }
+.ill-ground { stroke: #3a3a3a; stroke-width: 2; }
+.ill-arrow { stroke: var(--accent-text, var(--ball)); stroke-width: 3; stroke-dasharray: 6 5; }
+.ill .ill-head { fill: var(--accent-text, var(--ball)); stroke: none; }
+.ill .ill-ball { fill: var(--ball); stroke: none; }
+.ill-band { stroke: var(--red); stroke-width: 3; }
+.ill-post { stroke: #555; stroke-width: 6; }
+.ill-racket path, .ill-racket ellipse { stroke: var(--ball); stroke-width: 3; }
+.ill .ill-court { fill: rgba(46, 125, 50, 0.25); stroke: #e8e8e0; stroke-width: 2; }
+.ill-court-line { stroke: #e8e8e0; stroke-width: 1.5; opacity: 0.7; }
+.ill-net { stroke: #fff; stroke-width: 4; }
+.ill .ill-cone { fill: #ff8a3d; stroke: none; }
+.ill .ill-player { fill: var(--ball); stroke: var(--carbon); stroke-width: 2; }
+.ill .ill-zone { fill: rgba(212, 225, 87, 0.25); stroke: var(--ball); stroke-width: 1.5; stroke-dasharray: 4 3; }
+.ill .ill-zone.alt { fill: rgba(11, 61, 145, 0.35); stroke: #8fb3ff; }
+.ill-label, .ill-letter { fill: var(--text); font-family: inherit; font-size: 12px; font-weight: 700; }
+.ill-letter { font-size: 22px; fill: var(--ball); letter-spacing: 0.1em; }
+
+/* ---------- Gráficas de la tabla de control ---------- */
+.chart { margin: 0; display: grid; gap: 6px; }
+.chart-plot { position: relative; }
+.chart-grid { position: absolute; left: 0; right: 0; border-top: 1px dashed #3a3a3a; }
+.chart-grid.base { border-top: 1px solid #4a4a4a; }
+.chart-grid em { position: absolute; right: 0; top: -16px; font-style: normal; font-size: 0.7rem; color: var(--muted); }
+.chart-bars { position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: center; gap: 8px; padding: 0 18px; }
+.chart-bar {
+  flex: 1; max-width: 56px; min-height: 0; padding: 0; background: none; border-radius: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 4px; height: 100%;
+}
+.chart-fill {
+  width: 100%; border-radius: 4px 4px 0 0; background: #5d5d58;
+  transform-origin: bottom; animation: grow 600ms var(--ease-out) both;
+  transition: background-color 200ms ease;
+}
+.chart-bar.last .chart-fill { background: var(--ball); }
+.chart-bar.on .chart-fill { background: #8fb3ff; }
+.chart-value { font-size: 0.8rem; font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; }
+.chart-x { height: 18px; font-size: 0.68rem; color: var(--muted); white-space: nowrap; }
+@keyframes grow { from { transform: scaleY(0.05); } }
+
+.diverge { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.diverge li { display: grid; grid-template-columns: 1fr auto; grid-template-areas: 'name pct' 'track track'; gap: 4px 8px; align-items: center; }
+.diverge-name { grid-area: name; font-size: 0.85rem; }
+.diverge-pct { grid-area: pct; font-size: 0.85rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--muted); }
+.diverge-pct.up { color: #7ccb80; }
+.diverge-pct.down { color: #ff8593; }
+.diverge-track { grid-area: track; position: relative; height: 10px; background: var(--carbon); border-radius: 5px; }
+.diverge-zero { position: absolute; left: 50%; top: -3px; bottom: -3px; width: 2px; background: #5d5d58; }
+.diverge-bar { position: absolute; top: 0; bottom: 0; border-radius: 5px; animation: grow-x 600ms var(--ease-out) both; }
+.diverge-bar.up { background: var(--green); transform-origin: left; }
+.diverge-bar.down { background: var(--red); transform-origin: right; }
+@keyframes grow-x { from { transform: scaleX(0.05); } }

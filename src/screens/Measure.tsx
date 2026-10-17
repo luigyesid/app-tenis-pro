@@ -3,6 +3,7 @@ import { controlTests } from '../content/plan'
 import type { ControlTest } from '../content/types'
 import { today, update, useAppState } from '../lib/store'
 import { IconChevron } from '../ui/icons'
+import { ProgressOverview, TestChart } from '../ui/MeasureCharts'
 import { Ring } from '../ui/Ring'
 import { haptic } from '../ui/theme'
 
@@ -19,6 +20,7 @@ export function Measure() {
         <h1 className="title">Tabla de control</h1>
       </div>
       <p className="muted">Haz estas pruebas en la semana 1 y repítelas en la semana 8. Lo que no se mide, no mejora.</p>
+      <ProgressOverview tests={controlTests} measures={s.measures} />
       {controlTests.map((t) => {
         const logs = s.measures.filter((m) => m.testId === t.id)
         const first = logs[0]
@@ -42,6 +44,7 @@ export function Measure() {
                 <IconChevron size={20} className="week-chevron" />
               </span>
             </button>
+            {logs.length > 0 && <TestChart test={t} logs={logs} />}
             {isOpen && (
               <>
                 <Recorder

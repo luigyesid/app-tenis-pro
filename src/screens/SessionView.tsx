@@ -4,6 +4,7 @@ import { visibleExercises } from '../lib/progress'
 import { today, update, useAppState } from '../lib/store'
 import { IconBack, IconCheck } from '../ui/icons'
 import { accentStyle, haptic } from '../ui/theme'
+import { ExerciseIllustration } from '../ui/Illustrations'
 import { Timer } from './Timer'
 
 export function SessionView({
@@ -116,6 +117,7 @@ export function SessionView({
                 </button>
               </div>
               <div className="exercise-body">
+                <ExerciseIllustration name={ex.name} mode={profile.mode} />
                 <p>{ex.how}</p>
                 {specific && (
                   <p className="mode-note">
