@@ -3,6 +3,7 @@ import { pick, sessionCheers, weekCheers } from './content/cheers'
 import type { Session, Week } from './content/types'
 import { testimonialDue } from './lib/progress'
 import { useAppState } from './lib/store'
+import { useUpdateReady } from './lib/sw'
 import { Access } from './screens/Access'
 import { Fitness } from './screens/Fitness'
 import { Measure } from './screens/Measure'
@@ -28,6 +29,7 @@ type Tab = (typeof tabs)[number]['id']
 
 export default function App() {
   const s = useAppState()
+  const updateReady = useUpdateReady()
   const [tab, setTab] = useState<Tab>('hoy')
   const [open, setOpen] = useState<{ week: Week; session: Session } | null>(null)
   const [settings, setSettings] = useState(false)
@@ -106,8 +108,16 @@ export default function App() {
           </button>
         ))}
       </nav>
+      {updateReady && (
+        <div className="toast" role="status">
+          <span>Hay una versión nueva de la app.</span>
+          <button className="pill-btn primary" onClick={() => window.location.reload()}>
+            Actualizar
+          </button>
+        </div>
+      )}
       {party && <Celebrate {...party} onDone={() => setParty(null)} />}
-      {due && !open && !party && <TestimonialPrompt week={due} />}
+      {due && !open && !party && <TestimonialPrompt key={due} week={due} />}
     </>
   )
 }

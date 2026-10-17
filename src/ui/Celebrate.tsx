@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const COLORS = ['#D4E157', '#2E7D32', '#0B3D91', '#C8102E', '#FFFFFF']
 
@@ -16,10 +16,15 @@ export function Celebrate({ title, subtitle, onDone }: { title: string; subtitle
     })),
   )
 
+  // Guardamos onDone en una ref para que un re-render no reinicie el temporizador.
+  const done = useRef(onDone)
   useEffect(() => {
-    const t = window.setTimeout(onDone, 2200)
+    done.current = onDone
+  })
+  useEffect(() => {
+    const t = window.setTimeout(() => done.current(), 2600)
     return () => window.clearTimeout(t)
-  }, [onDone])
+  }, [])
 
   return (
     <div className="celebrate" role="status" onClick={onDone}>

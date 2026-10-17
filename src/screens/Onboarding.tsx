@@ -4,13 +4,14 @@ import { update } from '../lib/store'
 import { IconSpark, IconStanding, IconWheelchair } from '../ui/icons'
 import { haptic } from '../ui/theme'
 
-export function Onboarding({ initial }: { initial?: { mode: Mode; level: Level } }) {
-  const [mode, setMode] = useState<Mode | null>(initial?.mode ?? null)
+export function Onboarding({ onCancel, onDone }: { onCancel?: () => void; onDone?: () => void }) {
+  const [mode, setMode] = useState<Mode | null>(null)
 
   function chooseLevel(level: Level) {
     if (!mode) return
     haptic(20)
     update((s) => ({ ...s, profile: { mode, level } }))
+    onDone?.()
   }
 
   if (!mode) {
@@ -39,6 +40,11 @@ export function Onboarding({ initial }: { initial?: { mode: Mode; level: Level }
             </span>
           </button>
         </div>
+        {onCancel && (
+          <button className="link center-self" onClick={onCancel}>
+            Cancelar
+          </button>
+        )}
       </main>
     )
   }

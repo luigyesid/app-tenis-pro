@@ -86,9 +86,9 @@ const warmup: Ex = {
 
 const shadow: Ex = {
   name: 'Sombra frente al espejo',
-  how: '10 repeticiones lentas de cada golpe pensando en una sola fase (giro, impacto adelante, terminación). Luego 10 a velocidad normal.',
+  how: 'Repeticiones lentas de cada golpe pensando en una sola fase (giro, impacto adelante, terminación). Luego las mismas a velocidad normal.',
   reps: 10,
-  per: 'lentas y 10 normales por golpe',
+  per: 'lentas por golpe y otras tantas normales',
 }
 
 const play = (name: string, how: string, minutes = 15, extra: Partial<Ex> = {}): Ex => ({
@@ -104,6 +104,8 @@ const ex = {
     'Peloteo de fondo cuidando las 4 fases en cada bola: preparación temprana, llegar a la bola con pasos cortos, impacto adelante y terminación con recuperación.',
     20,
     {
+      howSilla:
+        'Peloteo de fondo cuidando las 4 fases en cada bola: preparación temprana, llegar a la bola con empujes cortos, impacto adelante y terminación con recuperación.',
       silla: 'Llega con la silla un poco de lado, gira el tronco y termina empujando de inmediato. Si la bola llega baja por el segundo bote, pega de abajo hacia arriba.',
     },
   ),
@@ -116,7 +118,7 @@ const ex = {
     name: 'Cruzado al cono',
     how: 'Cono o botella en la esquina cruzada, a 1 metro de la línea de fondo y de la lateral. Peloteo cruzado con un compañero; cuenta cuántas caen en la mitad del fondo.',
     reps: 50,
-    per: 'derechas y 50 revés',
+    per: 'de derecha y otras tantas de revés',
     goal: 'Meta: 7 de cada 10.',
   } satisfies Ex,
   longRally: play('Peloteos largos', 'Peloteo cruzado y con margen sobre la red, sin buscar ganadores.', 15, {
@@ -125,7 +127,9 @@ const ex = {
   tossRing: {
     name: 'Lanzamiento al aro',
     how: 'Raqueta en el piso delante y al lado de tu pie. Lanza la bola sin pegarle y déjala caer: debe caer sobre las cuerdas. Apunta cuántos aciertas.',
-    silla: 'Pon la raqueta delante y al lado de tu rueda, y lanza un poco más adelante para que el impacto no te tire hacia atrás.',
+    howSilla:
+      'Raqueta en el piso delante y al lado de tu rueda. Lanza la bola sin pegarle y déjala caer: debe caer sobre las cuerdas. Apunta cuántos aciertas.',
+    silla: 'Lanza un poco más adelante que de pie para que el impacto no te tire hacia atrás.',
     reps: 20,
   } satisfies Ex,
   threeZones: {
@@ -183,14 +187,16 @@ const ex = {
   ),
   wallVolleys: {
     name: 'Voleas contra la pared',
-    how: 'A 2–3 metros de una pared, volea sin dejar caer la bola: 20 seguidas de derecha, 20 de revés y luego alternando. Golpe corto, como un bloqueo.',
+    how: 'A 2–3 metros de una pared, volea sin dejar caer la bola: seguidas de derecha, luego de revés y luego alternando. Golpe corto, como un bloqueo.',
     sets: 3,
     reps: 20,
+    per: 'seguidas',
   } satisfies Ex,
   approachVolley: {
     name: 'Aproximación y volea',
     how: 'Tu compañero te manda una bola corta: atacas, subes, te mandan una pasada y voleas. Split step justo cuando el rival va a pegar.',
-    silla: 'Llega a la red con la silla en movimiento y frena con el tronco justo cuando el rival va a pegar.',
+    howSilla:
+      'Tu compañero te manda una bola corta: atacas, subes, te mandan una pasada y voleas. Llega a la red con la silla en movimiento y frena con el tronco justo cuando el rival va a pegar.',
     reps: 10,
     per: 'a cada lado',
   } satisfies Ex,
@@ -224,7 +230,7 @@ const ex = {
   } satisfies Ex,
   routinePoints: play(
     'Puntos con rutina',
-    'En cada punto: reacciona (3 s), recupera respirando 4 tiempos y exhalando 6, planea una sola cosa (3 s) y ejecuta.',
+    'En cada punto: reacciona (3 s), recupera inhalando en 4 tiempos y exhalando en 6, planea una sola cosa (3 s) y ejecuta.',
     20,
     { silla: 'En la recuperación ajusta tu posición en la silla, las correas y las manos.' },
   ),
@@ -265,12 +271,13 @@ const shouldersCore: Ex[] = [
   {
     name: 'Plancha frontal',
     how: 'Cuerpo recto y abdomen firme.',
-    silla: 'Contracciones abdominales sentado y rotaciones con balón medicinal liviano.',
+    nameSilla: 'Core sentado',
+    howSilla: 'Contracciones abdominales sentado y rotaciones con balón medicinal liviano.',
     sets: 3,
     seconds: 40,
     rest: 30,
   },
-  { name: 'Leñador', how: 'Rotaciones con banda o balón, de arriba a abajo cruzando el cuerpo.', sets: 3, reps: 12, per: 'a cada lado' },
+  { name: 'Leñador', how: 'Rotaciones con banda o balón, de arriba abajo cruzando el cuerpo.', sets: 3, reps: 12, per: 'a cada lado' },
   {
     name: 'Lanzamientos de balón medicinal',
     how: 'Balón liviano (2–3 kg) contra la pared, imitando la derecha y el revés.',
@@ -285,7 +292,8 @@ const speedEndurance: Ex[] = [
   {
     name: 'Sprints cortos',
     how: 'Sprints de 10–15 metros con 30 segundos de pausa.',
-    silla: 'Arrancadas explosivas de 10 metros con 30 segundos de pausa.',
+    nameSilla: 'Arrancadas',
+    howSilla: 'Arrancadas explosivas de 10 metros con 30 segundos de pausa.',
     sets: 10,
     seconds: 5,
     rest: 30,
@@ -294,7 +302,8 @@ const speedEndurance: Ex[] = [
   {
     name: 'Desplazamientos',
     how: 'Desplazamientos laterales con recuperación al centro.',
-    silla: 'Series de giros y frenadas: empuje adelante con una mano y atrás con la otra.',
+    nameSilla: 'Giros y frenadas',
+    howSilla: 'Series de giros y frenadas: empuje adelante con una mano y atrás con la otra.',
     sets: 4,
     seconds: 30,
     rest: 30,
@@ -302,7 +311,7 @@ const speedEndurance: Ex[] = [
   {
     name: 'Trabajo continuo suave',
     how: 'Caminar rápido o bicicleta.',
-    silla: 'Empuje continuo en silla o handbike.',
+    howSilla: 'Empuje continuo en silla o handbike.',
     seconds: 20 * MIN,
   },
   stretches,
@@ -416,16 +425,16 @@ export const weeks: Week[] = defs.map((d, i) => {
 // ── Tabla de control (capítulo 8) ─────────────────────────────────────────
 
 export const controlTests: ControlTest[] = [
-  { id: 'rally-derecha', name: 'Peloteo cruzado de derecha', unit: 'bolas seguidas sin error' },
-  { id: 'rally-reves', name: 'Peloteo cruzado de revés', unit: 'bolas seguidas sin error' },
+  { id: 'rally-derecha', name: 'Peloteo cruzado de derecha', unit: 'bolas seguidas sin error', unitOne: 'bola seguida sin error' },
+  { id: 'rally-reves', name: 'Peloteo cruzado de revés', unit: 'bolas seguidas sin error', unitOne: 'bola seguida sin error' },
   { id: 'cono-derecha', name: 'Cruzado al cono (derecha)', outOf: 20, unit: 'aciertos' },
   { id: 'cono-reves', name: 'Cruzado al cono (revés)', outOf: 20, unit: 'aciertos' },
   { id: 'primer-saque', name: 'Primeros saques adentro', outOf: 20, unit: 'adentro' },
   { id: 'segundo-saque', name: 'Segundos saques adentro', outOf: 20, unit: 'adentro' },
   { id: 'saque-zona', name: 'Saques a la zona elegida', outOf: 15, unit: 'aciertos' },
-  { id: 'voleas', name: 'Voleas seguidas contra la pared', unit: 'voleas' },
-  { id: 'esquinas', name: '4 esquinas en 30 segundos', unit: 'conos tocados' },
-  { id: 'plancha', name: 'Plancha (o core equivalente)', unit: 'segundos' },
+  { id: 'voleas', name: 'Voleas seguidas contra la pared', unit: 'voleas', unitOne: 'volea' },
+  { id: 'esquinas', name: '4 esquinas en 30 segundos', unit: 'conos tocados', unitOne: 'cono tocado' },
+  { id: 'plancha', name: 'Plancha (o core equivalente)', unit: 'segundos', unitOne: 'segundo' },
 ]
 
 // ── Zona mental (capítulo 7) ──────────────────────────────────────────────

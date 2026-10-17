@@ -34,7 +34,8 @@ export function describeVolume(v: Volume) {
   if (v.reps) parts.push(v.per ? `${v.reps} ${v.per}` : `${v.reps} repeticiones`)
   if (v.seconds) parts.push(v.seconds >= 60 ? `${fmtMin(v.seconds)} min` : `${v.seconds} s`)
   if (v.rest && v.sets && v.sets > 1) parts.push(`descanso ${v.rest} s`)
-  return parts.join(' · ')
+  // El número y su unidad no se separan, para que "30 s" no quede con la "s" sola en otra línea.
+  return parts.map((x) => x.replace(/(\d) /g, '$1\u00a0')).join(' · ')
 }
 
 /** Minutos aproximados de una lista de ejercicios, para el resumen de "Hoy toca". */

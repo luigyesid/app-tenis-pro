@@ -24,10 +24,15 @@ export function Fitness() {
   const s = useAppState()
   const mode = s.profile!.mode
   const list = presets.filter((p) => !p.only || p.only === mode)
-  const [cfg, setCfg] = useState({ work: list[0].work, rest: list[0].rest, rounds: list[0].rounds })
+  const [raw, setRaw] = useState(toRaw(list[0]))
   const [active, setActive] = useState(list[0].name)
-  const set = (k: keyof typeof cfg) => (e: React.ChangeEvent<HTMLInputElement>) =>
-    setCfg({ ...cfg, [k]: Math.max(1, Number(e.target.value) || 1) })
+  const set = (k: keyof typeof raw) => (e: React.ChangeEvent<HTMLInputElement>) => setRaw({ ...raw, [k]: e.target.value })
+  // Lo que se escribe se guarda tal cual y se ajusta a valores razonables para el temporizador.
+  const cfg = {
+    work: clamp(raw.work, 1, 3600, 30),
+    rest: clamp(raw.rest, 0, 600, 30),
+    rounds: clamp(raw.rounds, 1, 30, 1),
+  }
   const preset = list.find((p) => p.name === active)
 
   return (
@@ -43,7 +48,7 @@ export function Fitness() {
             className={p.name === active ? 'on' : ''}
             onClick={() => {
               setActive(p.name)
-              setCfg({ work: p.work, rest: p.rest, rounds: p.rounds })
+              setRaw(toRaw(p))
             }}
           >
             {p.name}
@@ -57,15 +62,15 @@ export function Fitness() {
       <div className="card row fields">
         <label>
           Trabajo (s)
-          <input type="number" inputMode="numeric" value={cfg.work} onChange={set('work')} />
+          <input type="number" inputMode="numeric" min={1} max={3600} step={1} value={raw.work} onChange={set('work')} />
         </label>
         <label>
           Descanso (s)
-          <input type="number" inputMode="numeric" value={cfg.rest} onChange={set('rest')} />
+          <input type="number" inputMode="numeric" min={0} max={600} step={1} value={raw.rest} onChange={set('rest')} />
         </label>
         <label>
           Series
-          <input type="number" inputMode="numeric" value={cfg.rounds} onChange={set('rounds')} />
+          <input type="number" inputMode="numeric" min={1} max={30} step={1} value={raw.rounds} onChange={set('rounds')} />
         </label>
       </div>
       <p className="muted small">
@@ -73,4 +78,14 @@ export function Fitness() {
       </p>
     </main>
   )
+}
+
+function toRaw(p: Preset) {
+  return { work: String(p.work), rest: String(p.rest), rounds: String(p.rounds) }
+}
+
+function clamp(v: string, min: number, max: number, fallback: number) {
+  const n = Math.round(Number(v))
+  if (v.trim() === '' || !Number.isFinite(n)) return fallback
+  return Math.min(max, Math.max(min, n))
 }

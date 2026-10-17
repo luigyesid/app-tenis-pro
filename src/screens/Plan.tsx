@@ -60,7 +60,10 @@ export function Plan({ open }: { open: (w: Week, s: Session) => void }) {
                         </span>
                         <span className="session-row-text">
                           <span className="small muted">{x.title}</span>
-                          <span>{x.focus}</span>
+                          <span>
+                            {x.focus}
+                            {done && <span className="sr-only"> (hecha)</span>}
+                          </span>
                         </span>
                       </button>
                     )

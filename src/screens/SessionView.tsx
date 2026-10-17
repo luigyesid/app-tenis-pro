@@ -22,7 +22,8 @@ export function SessionView({
   const done = !!s.done[session.id]
   const list = visibleExercises(session, profile.mode)
   const checked = new Set(s.checked[session.id] ?? [])
-  const progress = done ? 1 : checked.size / list.length
+  const checkedCount = list.filter((e) => checked.has(e.id)).length
+  const progress = done ? 1 : checkedCount / list.length
 
   function toggleExercise(id: string) {
     haptic(10)
@@ -55,11 +56,18 @@ export function SessionView({
         <button className="icon-btn" onClick={onClose} aria-label="Volver">
           <IconBack size={22} />
         </button>
-        <div className="session-progress" aria-label={`${Math.round(progress * 100)}% de la sesión`}>
+        <div
+          className="session-progress"
+          role="progressbar"
+          aria-label="Avance de la sesión"
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={Math.round(progress * 100)}
+        >
           <span style={{ transform: `scaleX(${progress})` }} />
         </div>
         <span className="muted small tabular">
-          {done ? list.length : checked.size}/{list.length}
+          {done ? list.length : checkedCount}/{list.length}
         </span>
       </div>
 

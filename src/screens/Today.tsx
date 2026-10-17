@@ -1,7 +1,7 @@
 import { weeks } from '../content/plan'
 import type { Session, Week } from '../content/types'
 import { describeVolume, estimateMinutes, scaleVolume } from '../content/volume'
-import { doneToday, nextSession, streak, visibleExercises, weekProgress } from '../lib/progress'
+import { doneToday, nextSession, visibleExercises, weekProgress } from '../lib/progress'
 import { useAppState } from '../lib/store'
 import { IconChevron, IconFlame, IconPlay } from '../ui/icons'
 import { Ring } from '../ui/Ring'
@@ -10,7 +10,6 @@ import { accentStyle, greeting } from '../ui/theme'
 export function Today({ open }: { open: (w: Week, s: Session) => void }) {
   const s = useAppState()
   const next = nextSession(s)
-  const days = streak(s)
   const trainedToday = doneToday(s)
   const totalDone = Object.keys(s.done).length
   const totalSessions = weeks.reduce((a, w) => a + w.sessions.length, 0)
@@ -21,7 +20,7 @@ export function Today({ open }: { open: (w: Week, s: Session) => void }) {
         <p className="eyebrow">{greeting()}</p>
         <h1 className="title">¡Completaste las 8 semanas! 🏆</h1>
         <p className="muted">Repite la medición en Medir para ver cuánto mejoraste, y vuelve a las sesiones que más te sirvieron.</p>
-        <StreakCard days={days} trainedToday={trainedToday} />
+        <StreakCard total={totalDone} trainedToday={trainedToday} />
       </main>
     )
   }
@@ -69,14 +68,14 @@ export function Today({ open }: { open: (w: Week, s: Session) => void }) {
       </button>
 
       <div className="grid-2">
-        <StreakCard days={days} trainedToday={trainedToday} />
+        <StreakCard total={totalDone} trainedToday={trainedToday} />
         <div className="card stat">
           <Ring value={p.done / p.total} size={56} color="var(--ball)">
             <strong>{p.done}</strong>
           </Ring>
           <span className="stat-text">
             <strong>de {p.total}</strong>
-            <span className="muted small">esta semana</span>
+            <span className="muted small">semana {week.number}</span>
           </span>
         </div>
       </div>
@@ -88,7 +87,7 @@ export function Today({ open }: { open: (w: Week, s: Session) => void }) {
             {totalDone}/{totalSessions} sesiones
           </span>
         </div>
-        <div className="path" aria-label="Avance de las 8 semanas">
+        <div className="path" role="img" aria-label={`Avance: ${totalDone} de ${totalSessions} sesiones`}>
           {weeks.map((w) => {
             const wp = weekProgress(s, w)
             const current = w.number === week.number
@@ -117,15 +116,17 @@ export function Today({ open }: { open: (w: Week, s: Session) => void }) {
   )
 }
 
-function StreakCard({ days, trainedToday }: { days: number; trainedToday: boolean }) {
+function StreakCard({ total, trainedToday }: { total: number; trainedToday: boolean }) {
   return (
     <div className={`card stat streak ${trainedToday ? 'lit' : ''}`}>
       <span className="flame">
         <IconFlame size={30} />
       </span>
       <span className="stat-text">
-        <strong className="streak-num">{days}</strong>
-        <span className="muted small">{days === 1 ? 'día seguido' : 'días seguidos'}</span>
+        <strong key={total} className="streak-num pop">
+          {total}
+        </strong>
+        <span className="muted small">{total === 1 ? 'sesión hecha' : 'sesiones hechas'}</span>
       </span>
     </div>
   )

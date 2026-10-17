@@ -9,6 +9,8 @@ import { haptic } from '../ui/theme'
 export function Measure() {
   const s = useAppState()
   const [open, setOpen] = useState<string | null>(null)
+  // Conteos en curso por prueba, para no perderlos al abrir otra tarjeta.
+  const [tallies, setTallies] = useState<Record<string, Tally>>({})
 
   return (
     <main className="screen stagger">
@@ -40,7 +42,20 @@ export function Measure() {
                 <IconChevron size={20} className="week-chevron" />
               </span>
             </button>
-            {isOpen && <Recorder test={t} onDone={() => setOpen(null)} />}
+            {isOpen && (
+              <>
+                <Recorder
+                  test={t}
+                  tally={tallies[t.id] ?? { made: 0, total: 0 }}
+                  setTally={(v) => setTallies((x) => ({ ...x, [t.id]: v }))}
+                  onDone={() => {
+                    setTallies((x) => ({ ...x, [t.id]: { made: 0, total: 0 } }))
+                    setOpen(null)
+                  }}
+                />
+                {logs.length > 0 && <History test={t} />}
+              </>
+            )}
           </section>
         )
       })}
@@ -48,8 +63,42 @@ export function Measure() {
   )
 }
 
+interface Tally {
+  made: number
+  total: number
+}
+
 function fmt(t: ControlTest, v: number) {
-  return t.outOf ? `${v} de ${t.outOf}` : `${v} ${t.unit}`
+  return t.outOf ? `${v} de ${t.outOf}` : `${v} ${v === 1 ? (t.unitOne ?? t.unit) : t.unit}`
+}
+
+function fmtDate(iso: string) {
+  const d = new Date(`${iso}T12:00:00`)
+  return Number.isNaN(d.getTime()) ? iso : d.toLocaleDateString('es', { day: 'numeric', month: 'short' })
+}
+
+/** Mediciones guardadas de una prueba, con opción de borrar una equivocada. */
+function History({ test }: { test: ControlTest }) {
+  const s = useAppState()
+  const entries = s.measures.map((m, i) => ({ m, i })).filter(({ m }) => m.testId === test.id)
+  return (
+    <ul className="history">
+      {entries.map(({ m, i }) => (
+        <li key={i} className="row between small">
+          <span>
+            <span className="muted">{fmtDate(m.date)}</span> · {fmt(test, m.value)}
+          </span>
+          <button
+            className="link"
+            onClick={() => update((st) => ({ ...st, measures: st.measures.filter((_, j) => j !== i) }))}
+            aria-label={`Borrar medición del ${fmtDate(m.date)}`}
+          >
+            Borrar
+          </button>
+        </li>
+      ))}
+    </ul>
+  )
 }
 
 function Delta({ from, to }: { from: number; to: number }) {
@@ -57,9 +106,18 @@ function Delta({ from, to }: { from: number; to: number }) {
   return <span className={`delta ${d > 0 ? 'up' : d < 0 ? 'down' : ''}`}>{d > 0 ? `+${d}` : d}</span>
 }
 
-function Recorder({ test, onDone }: { test: ControlTest; onDone: () => void }) {
-  const [made, setMade] = useState(0)
-  const [total, setTotal] = useState(0)
+function Recorder({
+  test,
+  tally,
+  setTally,
+  onDone,
+}: {
+  test: ControlTest
+  tally: Tally
+  setTally: (t: Tally) => void
+  onDone: () => void
+}) {
+  const { made, total } = tally
   const [value, setValue] = useState('')
 
   function save(v: number) {
@@ -73,10 +131,10 @@ function Recorder({ test, onDone }: { test: ControlTest; onDone: () => void }) {
       <div className="stack">
         <p className="muted small">Toca por cada bola: adentro del objetivo o afuera.</p>
         <div className="counter">
-          <button className="primary big" disabled={full} onClick={() => (haptic(10), setMade(made + 1), setTotal(total + 1))}>
+          <button className="primary big" disabled={full} onClick={() => (haptic(10), setTally({ made: made + 1, total: total + 1 }))}>
             Adentro
           </button>
-          <button className="big" disabled={full} onClick={() => (haptic(6), setTotal(total + 1))}>
+          <button className="big" disabled={full} onClick={() => (haptic(6), setTally({ made, total: total + 1 }))}>
             Afuera
           </button>
         </div>
@@ -85,14 +143,14 @@ function Recorder({ test, onDone }: { test: ControlTest; onDone: () => void }) {
             <strong key={made} className="pop">{made}</strong>
           </Ring>
           <span className="muted small">
-            adentro de {total} · faltan {test.outOf - total}
+            adentro de {total} · {test.outOf - total === 1 ? 'falta' : 'faltan'} {test.outOf - total}
           </span>
         </div>
         <div className="row">
           <button className="primary" disabled={!full} onClick={() => save(made)}>
             Guardar
           </button>
-          <button disabled={!total} onClick={() => (setMade(0), setTotal(0))}>
+          <button disabled={!total} onClick={() => setTally({ made: 0, total: 0 })}>
             Empezar de nuevo
           </button>
         </div>

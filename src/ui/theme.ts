@@ -1,9 +1,10 @@
 /** Cada semana toma un color de la marca, como los "capítulos de color" de la landing. */
 const accents = [
-  { bg: '#2E7D32', fg: '#FFFFFF' },
-  { bg: '#0B3D91', fg: '#FFFFFF' },
-  { bg: '#C8102E', fg: '#FFFFFF' },
-  { bg: '#D4E157', fg: '#171717' },
+  // `text`: versión clara del color, legible sobre el fondo oscuro.
+  { bg: '#2E7D32', fg: '#FFFFFF', text: '#7CCB80' },
+  { bg: '#0B3D91', fg: '#FFFFFF', text: '#8FB3FF' },
+  { bg: '#C8102E', fg: '#FFFFFF', text: '#FF8593' },
+  { bg: '#D4E157', fg: '#171717', text: '#D4E157' },
 ]
 
 export function weekAccent(n: number) {
@@ -12,7 +13,7 @@ export function weekAccent(n: number) {
 
 export function accentStyle(n: number) {
   const a = weekAccent(n)
-  return { '--accent': a.bg, '--on-accent': a.fg } as React.CSSProperties
+  return { '--accent': a.bg, '--on-accent': a.fg, '--accent-text': a.text } as React.CSSProperties
 }
 
 export function greeting(d = new Date()) {

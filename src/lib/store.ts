@@ -26,6 +26,8 @@ export interface AppState {
   checked: Record<string, string[]>
   /** Semanas (4 y 8) en las que ya se pidió el testimonio. */
   testimonialAsked: number[]
+  /** Día en que tocó "Ahora no"; la encuesta vuelve a salir otro día. */
+  testimonialSnooze?: string
 }
 
 const KEY = 'tenispro:v2'

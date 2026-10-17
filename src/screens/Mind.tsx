@@ -34,11 +34,13 @@ function Diary() {
   const [good, setGood] = useState('')
   const [improve, setImprove] = useState('')
   const [rival, setRival] = useState('')
+  const [all, setAll] = useState(false)
 
   function save(e: React.FormEvent) {
     e.preventDefault()
-    if (!good && !improve && !rival) return
-    update((st) => ({ ...st, diary: [...st.diary, { date: today(), good, improve, rival }] }))
+    const entry = { date: today(), good: good.trim(), improve: improve.trim(), rival: rival.trim() }
+    if (!entry.good && !entry.improve && !entry.rival) return
+    update((st) => ({ ...st, diary: [...st.diary, entry] }))
     setGood('')
     setImprove('')
     setRival('')
@@ -84,9 +86,10 @@ function Diary() {
       )}
       {!writing &&
         s.diary
-          .slice(-3)
+          .map((d, i) => ({ d, i }))
+          .slice(all ? 0 : -3)
           .reverse()
-          .map((d, i) => (
+          .map(({ d, i }) => (
             <div key={i} className="entry small">
               <span className="muted">{fmtDate(d.date)}</span>
               {d.good && <p>✓ {d.good}</p>}
@@ -94,6 +97,11 @@ function Diary() {
               {d.rival && <p>◎ {d.rival}</p>}
             </div>
           ))}
+      {!writing && s.diary.length > 3 && (
+        <button className="link center-self" onClick={() => setAll(!all)}>
+          {all ? 'Ver menos' : `Ver todas (${s.diary.length})`}
+        </button>
+      )}
     </section>
   )
 }
