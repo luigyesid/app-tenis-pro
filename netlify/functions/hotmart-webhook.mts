@@ -6,9 +6,13 @@
 //   SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY  (la service role key solo vive aquí, nunca en la app)
 //   HOTMART_HOTTOK                           (Hotmart > Herramientas > Webhook)
 //   ALLOWED_OFFERS                           (opcional, códigos de oferta separados por coma; p. ej. O107951429N)
-//   RESEND_API_KEY, EMAIL_FROM               (opcional; sin ellos el código se crea pero no se envía)
+//   GMAIL_USER, GMAIL_APP_PASSWORD           (envío desde Gmail con una contraseña de aplicación)
+//   RESEND_API_KEY, EMAIL_FROM               (alternativa con dominio propio)
+//   APP_URL                                  (opcional; dirección de la app en el correo)
+// Sin datos de envío el código se crea igual y se puede ver en la tabla access_codes de Supabase.
 import { createClient } from '@supabase/supabase-js'
 import { randomInt } from 'node:crypto'
+import nodemailer from 'nodemailer'
 
 const GRANT = new Set(['PURCHASE_APPROVED', 'PURCHASE_COMPLETE'])
 const REVOKE = new Set(['PURCHASE_REFUNDED', 'PURCHASE_CHARGEBACK', 'PURCHASE_CANCELED'])
@@ -77,20 +81,31 @@ export default async (req: Request) => {
 }
 
 async function sendEmail(to: string, name: string | undefined, code: string) {
-  if (!env('RESEND_API_KEY') || !env('EMAIL_FROM')) return
   const first = (name ?? '').split(' ')[0].replace(/[<>&"']/g, '')
-  const appUrl = env('APP_URL') || 'https://tenispro-luigy.netlify.app'
-  await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${env('RESEND_API_KEY')}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      from: env('EMAIL_FROM'),
-      to,
-      subject: 'Tu código para la app Tenis Pro',
-      html: `<p>Hola${first ? ` ${first}` : ''}, gracias por comprar Tenis Pro en 8 Semanas.</p>
+  const appUrl = env('APP_URL') || 'https://tenispro-app.netlify.app'
+  const subject = 'Tu código para la app Tenis Pro'
+  const html = `<p>Hola${first ? ` ${first}` : ''}, gracias por comprar Tenis Pro en 8 Semanas.</p>
 <p>Tu código de acceso es: <strong style="font-size:20px">${code}</strong></p>
 <p>Abre la app aquí y escríbelo: <a href="${appUrl}">${appUrl}</a></p>
-<p>Nos vemos en la cancha,<br>Luigy</p>`,
-    }),
-  }).catch(() => undefined)
+<p>Guárdala en la pantalla de inicio de tu celular para tenerla siempre a mano.</p>
+<p>Nos vemos en la cancha,<br>Luigy</p>`
+
+  try {
+    if (env('GMAIL_USER') && env('GMAIL_APP_PASSWORD')) {
+      const transport = nodemailer.createTransport({
+        service: 'gmail',
+        auth: { user: env('GMAIL_USER'), pass: env('GMAIL_APP_PASSWORD') },
+      })
+      await transport.sendMail({ from: `Luigy Nieves · Tenis Pro <${env('GMAIL_USER')}>`, to, subject, html })
+    } else if (env('RESEND_API_KEY') && env('EMAIL_FROM')) {
+      await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${env('RESEND_API_KEY')}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ from: env('EMAIL_FROM'), to, subject, html }),
+      })
+    }
+  } catch (err) {
+    // El código ya quedó guardado; si el correo falla, se puede reenviar a mano desde Supabase.
+    console.error('No se pudo enviar el correo', err)
+  }
 }
