@@ -448,6 +448,7 @@ input:focus, textarea:focus, button:focus-visible, summary:focus-visible { outli
   to { transform: translate(var(--drift), 110dvh) rotate(var(--spin)); }
 }
 .celebrate-card {
+  position: relative; z-index: 1;
   display: grid; justify-items: center; gap: 10px; text-align: center;
   padding: 28px 24px; margin: 16px; border-radius: 28px;
   background: var(--surface); border: 1px solid var(--line);
