@@ -1,0 +1,800 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tenis Pro en 8 Semanas | Luigy Nieves</title>
+<meta name="description" content="El plan de 8 semanas de Luigy Nieves, nº 3 de Colombia en tenis en silla de ruedas. E-book + app para jugadores de pie y en silla. Pack US$24,99 o e-book US$9,99. Garantía de 7 días.">
+<meta property="og:title" content="Tenis Pro en 8 Semanas · Luigy Nieves">
+<meta property="og:description" content="E-book + app con el plan de 8 semanas para jugar de pie o en silla. Pack US$24,99.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://tenispro-app.netlify.app/landing/img/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#171717">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+:root {
+  --ground: #171717;
+  --surface: #242424;
+  --surface-2: #2f2f2f;
+  --ink: #ffffff;
+  --ink-soft: #b9b9b9;
+  --lime: #D4E157;
+  --green: #2E7D32;
+  --blue: #0B3D91;
+  --red: #C8102E;
+  --dark: #171717;
+
+  --margin: clamp(16px, 2.6vw, 40px);
+  --gap-section: clamp(112px, 13vw, 200px);
+
+  --t-display: clamp(44px, 9.4vw, 152px);
+  --t-head: clamp(34px, 4.6vw, 76px);
+  --t-sub: clamp(24px, 2.5vw, 38px);
+  --t-body: 18px;
+  --t-small: 15px;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-soft: cubic-bezier(0.33, 1, 0.68, 1);
+  --t-press: 140ms;
+  --t-hover: 180ms;
+  --t-ui: 240ms;
+  --t-reveal: 800ms;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--ground); color: var(--ink);
+  font-family: Rubik, system-ui, sans-serif; font-size: var(--t-body); line-height: 1.5;
+  -webkit-font-smoothing: antialiased; overflow-x: hidden;
+}
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+h1, h2, h3, p, ol, ul, figure, blockquote { margin: 0; }
+h1, h2, h3 { font-weight: 700; letter-spacing: -0.035em; line-height: 0.98; }
+:focus-visible { outline: 3px solid var(--lime); outline-offset: 3px; }
+::selection { background: var(--lime); color: var(--dark); }
+.wrap { padding-inline: var(--margin); }
+.soft { color: var(--ink-soft); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Botones: un solo estilo, esquinas rectas */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .6em;
+  min-height: 56px; padding: 0 28px; border: 0; border-radius: 0;
+  background: var(--lime); color: var(--dark); font: 700 17px/1 Rubik, sans-serif;
+  text-decoration: none; cursor: pointer;
+  transition: transform var(--t-press) var(--ease-out), background-color var(--t-hover) ease;
+}
+.btn:hover { background: #e2ee6c; }
+.btn:active { transform: scale(0.97); }
+.btn .arrow { transition: transform var(--t-hover) var(--ease-out); }
+.btn:hover .arrow { transform: translateX(4px); }
+.btn.dark { background: var(--dark); color: var(--ink); }
+.btn.dark:hover { background: #000; }
+.link { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 2px; transition: color var(--t-hover) ease; }
+.link:hover { color: var(--lime); }
+
+/* Navegación */
+.nav {
+  position: absolute; inset: 0 0 auto 0; z-index: 5;
+  display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  padding: 24px var(--margin);
+}
+.wordmark { font-weight: 800; font-size: 18px; letter-spacing: -0.02em; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; }
+.wordmark .ball { width: 14px; height: 14px; border-radius: 50%; background: var(--lime); }
+.nav ul { list-style: none; padding: 0; display: flex; gap: 28px; font-size: var(--t-small); }
+.nav ul a { text-decoration: none; transition: color var(--t-hover) ease; }
+.nav ul a:hover { color: var(--lime); }
+.nav .btn { min-height: 44px; padding: 0 20px; font-size: 15px; }
+
+/* Hero: la frase es la composición */
+.hero {
+  min-height: 100svh; display: grid; align-content: center; justify-items: center;
+  padding: 120px var(--margin) 96px; text-align: center; position: relative;
+}
+.hero h1 { font-size: var(--t-display); font-weight: 800; letter-spacing: -0.045em; line-height: 1.0; }
+.hero h1 .line { display: block; overflow: hidden; padding-bottom: .04em; }
+.hero h1 .line > span { display: inline-block; }
+.hero .lede { max-width: 44ch; margin-top: 44px; font-size: 19px; line-height: 1.5; }
+.hero .actions { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 20px 28px; align-items: center; justify-content: center; }
+
+/* Controles reales de la app, encima de la frase */
+.chips { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; margin-top: 48px; }
+.chip {
+  background: var(--surface); color: var(--ink);
+  border-radius: 18px; padding: 14px 18px; text-align: left; font-size: 15px; line-height: 1.25;
+  min-width: 210px;
+}
+.chip b { display: block; font-size: 22px; letter-spacing: -0.02em; }
+.chip.c1 { transform: rotate(-2.5deg); }
+.chip.c2 { transform: rotate(2deg) translateY(10px); }
+.chip.c3 { transform: rotate(-1.5deg); }
+.meter { display: flex; gap: 4px; margin-top: 8px; }
+.meter i { width: 14px; height: 6px; border-radius: 3px; background: var(--surface-2); }
+.meter i.on { background: var(--lime); }
+.seg { display: inline-flex; background: var(--ground); border-radius: 999px; padding: 4px; margin-top: 8px; }
+.seg button {
+  border: 0; background: transparent; color: var(--ink-soft); font: 500 15px Rubik, sans-serif;
+  padding: 9px 16px; border-radius: 999px; cursor: pointer; min-height: 40px;
+  transition: background-color var(--t-ui) var(--ease-out), color var(--t-ui) ease, transform var(--t-press) var(--ease-out);
+}
+.seg button:active { transform: scale(0.95); }
+.seg button[aria-pressed="true"] { background: var(--lime); color: var(--dark); }
+
+/* Sobre mí: retrato como letra capital */
+.about { padding-block: var(--gap-section); display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 24px; }
+.about .facts { grid-column: 1 / span 2; font-size: var(--t-small); display: grid; gap: 20px; align-content: start; padding-top: 6px; }
+.about .facts b { display: block; font-size: 17px; }
+.about .bio { grid-column: 3 / span 10; font-size: var(--t-sub); line-height: 1.22; letter-spacing: -0.01em; }
+.about .bio p + p { margin-top: 1.2em; }
+
+/* Mi camino: filas con fotos en el margen */
+.journey { padding-bottom: var(--gap-section); }
+.journey .intro { min-height: 62svh; display: grid; align-content: center; padding-left: 35%; }
+.journey .intro h2 { font-size: var(--t-head); max-width: 12ch; }
+.journey .intro p { margin-top: 24px; max-width: 38ch; }
+.row { display: grid; grid-template-columns: 35% 1fr auto; column-gap: 32px; align-items: start; }
+.row + .row { margin-top: 96px; }
+.row .year { grid-column: 1; justify-self: end; font-size: var(--t-head); font-weight: 800; letter-spacing: -0.04em; line-height: .9; color: var(--ink-soft); padding-right: 8px; }
+.row .text { grid-column: 2; max-width: 40ch; padding-top: 4px; }
+.row h3 { font-size: clamp(28px, 3vw, 48px); }
+.row p { margin-top: 14px; font-size: 18px; }
+.row figure { grid-column: 3; overflow: hidden; background: var(--surface); transform: translateY(var(--py, 0px)) rotate(var(--rot, 0deg)); transition: clip-path 900ms var(--ease-out) var(--d, 0ms); will-change: transform; }
+.row:nth-of-type(odd) figure { --rot: 2.5deg; }
+.row:nth-of-type(even) figure { --rot: -3deg; }
+/* Filas pares: la foto pasa a la izquierda para que el recorrido zigzaguee */
+.row.flip { grid-template-columns: auto 1fr 35%; }
+.row.flip figure { grid-column: 1; grid-row: 1; }
+.row.flip .text { grid-column: 2; grid-row: 1; justify-self: end; text-align: right; }
+.row.flip .year { grid-column: 3; grid-row: 1; justify-self: start; padding: 0 0 0 8px; }
+.row figure img { width: 100%; height: 100%; object-fit: cover; transition: transform 900ms var(--ease-soft); }
+.row:hover figure img { transform: scale(1.04); }
+.row.r1 figure { width: min(540px, 36vw); aspect-ratio: 3/2; }
+.row.r2 figure { width: min(380px, 26vw); aspect-ratio: 4/5; }
+.row.r3 figure { width: min(460px, 32vw); aspect-ratio: 4/3; }
+.row.r4 figure { width: min(320px, 22vw); aspect-ratio: 4/5; }
+.row.r5 figure { width: min(560px, 38vw); aspect-ratio: 3/2; }
+.row.r6 figure { width: min(420px, 29vw); aspect-ratio: 1; }
+.row.goal .year { color: var(--lime); }
+.video { margin: 140px auto 0; max-width: 960px; }
+.video button {
+  position: relative; display: block; width: 100%; aspect-ratio: 16/9; border: 0; padding: 0; cursor: pointer;
+  background: var(--surface); overflow: hidden;
+}
+.video button img { width: 100%; height: 100%; object-fit: cover; transition: transform 900ms var(--ease-soft); }
+.video button:hover img { transform: scale(1.03); }
+.video .play {
+  position: absolute; left: 24px; bottom: 24px; display: inline-flex; align-items: center; gap: 12px;
+  background: var(--lime); color: var(--dark); font: 700 17px Rubik, sans-serif; padding: 16px 22px;
+  transition: transform var(--t-press) var(--ease-out);
+}
+.video button:active .play { transform: scale(0.96); }
+.video iframe { width: 100%; aspect-ratio: 16/9; border: 0; display: block; }
+.video p { margin-top: 16px; font-size: var(--t-small); }
+
+/* La app: un marco, tres distancias */
+.show { height: 300vh; position: relative; background: var(--surface); }
+.show .stage { position: sticky; top: 0; height: 100svh; display: grid; align-items: center; overflow: hidden; padding: 48px var(--margin); }
+.show .center { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: clamp(32px, 6vw, 120px); align-items: center; max-width: 1280px; width: 100%; margin: 0 auto; }
+.show h2 { font-size: clamp(44px, 6vw, 104px); }
+.show .caps { list-style: none; padding: 0; margin: 40px 0 0; display: grid; gap: 22px; max-width: 40ch; }
+.show .cap { font-size: 18px; color: var(--ink-soft); transition: color 400ms ease, transform 400ms var(--ease-out); }
+.show .cap b { display: block; font-size: 22px; margin-bottom: 4px; letter-spacing: -0.01em; transition: color 400ms ease; }
+.show[data-stage="1"] .cap.c-a, .show[data-stage="2"] .cap.c-b, .show[data-stage="3"] .cap.c-c { color: var(--ink); transform: translateX(8px); }
+.show[data-stage="1"] .cap.c-a b, .show[data-stage="2"] .cap.c-b b, .show[data-stage="3"] .cap.c-c b { color: var(--lime); }
+.frame { height: min(78svh, 740px); aspect-ratio: 780/1300; overflow: hidden; background: var(--ground); border-radius: 28px; }
+.frame img { width: 100%; transition: transform 800ms var(--ease-in-out); transform-origin: 50% 14%; }
+.show[data-stage="2"] .frame img { transform: scale(1.3); transform-origin: 50% 24%; }
+.show[data-stage="3"] .frame img { transform: scale(1.45); transform-origin: 50% 80%; }
+.markers { position: absolute; inset: 0; pointer-events: none; }
+.markers i { position: absolute; left: 0; width: 1px; height: 100vh; } /* taste-skill-ignore: marcadores invisibles, uno por etapa */
+
+/* El plan: arrastra las 8 semanas (lo vivo) */
+.plan { display: grid; grid-template-columns: 1fr 1fr; min-height: 92svh; }
+.plan .left { background: var(--green); padding: 72px var(--margin) 40px; display: grid; align-content: start; gap: 28px; }
+.plan .right { background: var(--ground); padding: 56px var(--margin) 40px; display: grid; place-items: center; }
+.plan h2 { font-size: var(--t-head); min-height: 2em; }
+.plan h2 .wk { display: block; }
+.plan .goal { font-size: 20px; max-width: 36ch; min-height: 4.5em; }
+.plan .chap { font-size: var(--t-small); }
+.plan .choose { display: flex; flex-wrap: wrap; gap: 12px 16px; align-items: center; }
+.plan .choose .seg { margin: 0; background: rgba(0,0,0,.22); }
+.plan .choose .seg button { color: #fff; }
+.plan .choose .seg button[aria-pressed="true"] { color: var(--dark); }
+.track { grid-column: 1 / -1; background: var(--ground); padding: 28px var(--margin) 56px; }
+.track label { display: block; font-size: var(--t-small); margin-bottom: 14px; }
+input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 40px; background: transparent; cursor: pointer; margin: 0; }
+input[type=range]::-webkit-slider-runnable-track { height: 8px; background: linear-gradient(var(--ink), var(--ink)) 0 / var(--fill, 0%) 100% no-repeat, var(--surface-2); } /* taste-skill-ignore: relleno plano de un campo */
+input[type=range]::-moz-range-track { height: 8px; background: var(--surface-2); }
+input[type=range]::-moz-range-progress { height: 8px; background: var(--ink); }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 32px; height: 32px; margin-top: -12px; background: var(--lime); border: 0; border-radius: 0; transition: transform var(--t-press) var(--ease-out); }
+input[type=range]:active::-webkit-slider-thumb { transform: scale(1.15); }
+input[type=range]::-moz-range-thumb { width: 32px; height: 32px; background: var(--lime); border: 0; border-radius: 0; }
+.ticks { display: grid; grid-template-columns: repeat(8, 1fr); margin-top: 12px; font-size: var(--t-small); }
+.ticks button { background: none; border: 0; padding: 6px 0; text-align: left; color: var(--ink-soft); font: inherit; cursor: pointer; transition: color var(--t-hover) ease; }
+.ticks button:hover { color: var(--ink); }
+.ticks button[aria-current="true"] { color: var(--ink); font-weight: 700; }
+
+/* Fragmento de la app (data-ui) */
+.app { width: min(440px, 100%); background: #1d1d1d; border-radius: 28px; padding: 22px; font-size: 16px; }
+.app-top { display: flex; justify-content: space-between; align-items: center; font-size: 14px; color: var(--ink-soft); margin-bottom: 16px; }
+.app-top .mode { background: var(--surface-2); color: var(--ink); padding: 6px 12px; border-radius: 999px; }
+.app h4 { margin: 0 0 4px; font-size: 24px; letter-spacing: -0.02em; }
+.app .sub { color: var(--ink-soft); font-size: 15px; margin-bottom: 16px; }
+.sess { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.sess > li > button {
+  width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  background: var(--surface); color: var(--ink); border: 0; border-radius: 16px; padding: 14px 16px;
+  font: 500 16px Rubik, sans-serif; text-align: left; cursor: pointer;
+  transition: background-color var(--t-hover) ease, transform var(--t-press) var(--ease-out);
+}
+.sess > li > button:hover { background: var(--surface-2); }
+.sess > li > button:active { transform: scale(0.98); }
+.sess .tag { font-size: 13px; padding: 4px 10px; border-radius: 999px; background: var(--surface-2); color: var(--ink-soft); white-space: nowrap; }
+.sess .tenis .tag { background: var(--red); color: #fff; }
+.sess .fisico .tag { background: var(--blue); color: #fff; }
+.sess li.open > button { background: var(--surface-2); border-radius: 16px 16px 0 0; }
+.sess .ex { background: var(--surface-2); border-radius: 0 0 16px 16px; padding: 4px 16px 14px; margin: 0; list-style: none; display: grid; gap: 8px; font-size: 15px; }
+.sess .ex li { display: grid; grid-template-columns: 10px 1fr; gap: 10px; align-items: baseline; }
+.sess .ex li::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--lime); transform: translateY(-2px); }
+.sess .ex small { display: block; color: var(--ink-soft); font-size: 14px; }
+.swap { transition: opacity 200ms ease; }
+.swap.out { opacity: 0; }
+
+/* Mira por dentro */
+.inside { padding-block: var(--gap-section); }
+.inside .head { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 24px; align-items: end; margin-bottom: 72px; }
+.inside h2 { grid-column: 1 / span 6; font-size: var(--t-head); }
+.inside .head p { grid-column: 8 / span 5; max-width: 40ch; }
+.phones { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; align-items: start; }
+.phones figure:nth-child(2) { margin-top: 96px; }
+.phones figure:nth-child(3) { margin-top: 32px; }
+.phones figure:nth-child(4) { margin-top: 144px; }
+.phones .shot { border-radius: 24px; overflow: hidden; background: var(--surface); aspect-ratio: 780/1500; }
+.phones .shot img { width: 100%; transition: transform 1200ms var(--ease-soft); }
+.phones figure:hover .shot img { transform: translateY(-6%); }
+.phones figcaption { margin-top: 18px; font-size: 17px; max-width: 30ch; }
+.phones figcaption b { display: block; font-size: 22px; letter-spacing: -0.01em; margin-bottom: 4px; }
+
+/* El libro */
+.book { background: var(--red); padding-block: 120px; }
+.book .grid { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 24px; row-gap: 48px; }
+.book .say { grid-column: 1 / span 5; }
+.book h2 { font-size: var(--t-head); }
+.book .say p { margin-top: 24px; font-size: 20px; max-width: 34ch; }
+.book .say .btn { margin-top: 36px; }
+.book ol { grid-column: 7 / span 6; padding: 0; list-style: none; counter-reset: c; display: grid; gap: 4px; }
+.book ol li {
+  counter-increment: c; position: relative; padding: 8px 0 8px 2.2ch;
+  font-size: 26px; font-weight: 500; letter-spacing: -0.015em; line-height: 1.15;
+}
+.book ol li::before { content: counter(c); position: absolute; left: 0; color: rgba(255,255,255,.6); font-weight: 700; }
+.book ol li small { display: block; font-size: 16px; font-weight: 400; letter-spacing: 0; color: rgba(255,255,255,.82); margin-top: 4px; }
+
+/* Precio como frase */
+.price { background: var(--ground); padding: 140px var(--margin) 120px; min-height: 80svh; display: grid; align-content: center; }
+.price h2 { font-size: clamp(44px, 8.4vw, 136px); line-height: .95; }
+.price .tag { display: inline-block; background: var(--lime); color: var(--dark); padding: 0 .15em; line-height: 1; }
+.price .base { margin-top: 64px; display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 24px; align-items: end; }
+.price .base p { grid-column: 1 / span 6; font-size: 20px; }
+.price .base .act { grid-column: 9 / span 4; justify-self: end; display: grid; gap: 16px; justify-items: end; text-align: right; }
+.price s { color: var(--ink-soft); }
+
+/* Preguntas abiertas */
+.faq { padding-block: var(--gap-section); }
+.qa { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 24px; }
+.qa + .qa { margin-top: 80px; }
+.qa h3, .qa .q { grid-column: 1 / span 6; font-size: clamp(26px, 2.6vw, 40px); font-weight: 500; letter-spacing: -0.02em; line-height: 1.1; }
+.qa p { grid-column: 8 / span 5; font-size: 18px; line-height: 1.55; max-width: 42ch; padding-top: .2em; }
+
+/* Cierre invertido */
+.close { background: var(--lime); color: var(--dark); min-height: 90svh; padding: 120px var(--margin) 48px; display: grid; grid-template-rows: 1fr auto; }
+.close h2 { font-size: clamp(56px, 10vw, 168px); line-height: .9; letter-spacing: -0.05em; }
+.close .base { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 24px; align-items: end; margin-top: 64px; }
+.close .base p { grid-column: 1 / span 5; font-size: 20px; }
+.close .base .btn { grid-column: 10 / span 3; justify-self: end; }
+
+/* Pie: el contacto es el titular */
+.foot { background: var(--blue); min-height: 90svh; padding: 40px var(--margin) 32px; display: grid; grid-template-rows: auto 1fr auto auto; }
+.foot .top { display: flex; justify-content: space-between; gap: 24px; font-size: var(--t-small); }
+.foot .top .notes { display: grid; gap: 6px; }
+.foot .big { align-self: end; font-size: clamp(44px, 9.6vw, 160px); font-weight: 800; letter-spacing: -0.045em; line-height: 1; text-decoration: none; display: inline-block; padding-top: 120px; transition: color var(--t-hover) ease; }
+.foot .big:hover { color: var(--lime); }
+.foot .big small { display: block; font-size: 18px; font-weight: 500; letter-spacing: 0; margin-bottom: 18px; }
+.foot .meta { margin-top: 48px; display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; font-size: 14px; }
+.foot .meta > :nth-child(2) { text-align: center; }
+.foot .meta > :last-child { text-align: right; }
+
+/* Barra fija en celular */
+.bar { display: none; }
+
+/* Entradas */
+html.js [data-rise] { opacity: 0; transform: translateY(24px); transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out); transition-delay: var(--d, 0ms); }
+html.js [data-rise].in { opacity: 1; transform: none; }
+html.js [data-open] { clip-path: inset(0 0 100% 0); transition: clip-path 900ms var(--ease-out); transition-delay: var(--d, 0ms); }
+html.js [data-open].in { clip-path: inset(0 0 0 0); }
+html.js .hero h1 .line > span { transform: translateY(105%); transition: transform 900ms var(--ease-out); }
+html.js .hero h1 .line:nth-child(2) > span { transition-delay: 110ms; }
+html.js .hero.go h1 .line > span { transform: none; }
+html.js .hero .after { opacity: 0; transform: translateY(14px); transition: opacity 600ms var(--ease-out) 520ms, transform 600ms var(--ease-out) 520ms; }
+html.js .hero.go .after { opacity: 1; transform: none; }
+html.js .hero .chip { opacity: 0; transition: opacity 600ms var(--ease-out) 760ms, transform 160ms var(--ease-out); }
+html.js .hero.go .chip { opacity: 1; }
+.chip:hover { transform: rotate(0deg) !important; }
+
+@media (max-width: 1100px) {
+  .nav ul { display: none; }
+
+  .row figure { width: 30vw !important; }
+  .book .say, .book ol { grid-column: 1 / -1; }
+}
+
+@media (max-width: 760px) {
+  :root { --t-body: 17px; }
+  .nav { padding: 18px var(--margin); }
+  .nav .btn { min-height: 44px; padding: 0 16px; }
+  .hero { padding-top: 92px; padding-bottom: 72px; min-height: 100svh; }
+  .hero h1 { font-size: 12vw; }
+  .hero .lede { font-size: 17px; margin-top: 28px; }
+  .chips { gap: 10px; margin-top: 28px; }
+  .chip { transform: none !important; min-width: 0; padding: 12px 14px; font-size: 14px; }
+  .chip b { font-size: 18px; }
+  .chip.c1 { display: none; }
+  .about { display: block; }
+  .about .bio { font-size: 22px; line-height: 1.25; }
+  .about .facts { grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 40px; font-size: 13px; }
+  .about .facts b { font-size: 15px; }
+  .journey .intro { padding-left: 0; min-height: 44svh; }
+  .journey .intro h2 { font-size: 9.6vw; }
+  .row { grid-template-columns: 1fr; }
+  .row + .row { margin-top: 64px; }
+  .row .year { grid-column: 1; justify-self: start; font-size: 15vw; }
+  .row .text { grid-column: 1; }
+  .row h3 { font-size: 26px; }
+  .row figure { grid-column: 1; margin-top: 20px; }
+  .row.r1 figure, .row.r4 figure { width: 100%; }
+  .row.r2 figure, .row.r5 figure { width: 72%; justify-self: end; }
+  .row.r3 figure, .row.r6 figure { width: 58%; }
+  .video { margin: 88px 0 0; }
+  .row.flip { grid-template-columns: 1fr; }
+  .row.flip .year, .row.flip .text, .row.flip figure { grid-column: 1; grid-row: auto; justify-self: start; text-align: left; padding: 0; }
+  .row.flip figure { justify-self: end; }
+  .show .stage { padding: 24px var(--margin); }
+  .show .center { grid-template-columns: 1fr; justify-items: center; text-align: center; row-gap: 20px; }
+  .show h2 { font-size: 10vw; }
+  .show .caps { margin: 0; }
+  .show .cap { display: none; transform: none !important; }
+  .show[data-stage="1"] .cap.c-a, .show[data-stage="2"] .cap.c-b, .show[data-stage="3"] .cap.c-c { display: block; }
+  .frame { height: min(58svh, 520px); border-radius: 22px; grid-row: 2; }
+  .show .text { display: contents; }
+  .plan { grid-template-columns: 1fr; }
+  .plan .right { order: 1; padding: 40px var(--margin) 28px; }
+  .track { order: 2; padding: 8px var(--margin) 24px; }
+  .plan .left { order: 3; padding: 48px var(--margin) 56px; }
+  .plan h2 { font-size: 9.6vw; }
+  .ticks { display: block; font-size: 16px; }
+  .ticks button:not([aria-current="true"]) { display: none; }
+  input[type=range]::-webkit-slider-thumb { width: 40px; height: 40px; margin-top: -16px; }
+  input[type=range]::-moz-range-thumb { width: 40px; height: 40px; }
+  .inside .head { display: block; margin-bottom: 48px; }
+  .inside h2 { font-size: 10vw; }
+  .inside .head p { margin-top: 20px; }
+  .phones { grid-template-columns: 1fr 1fr; gap: 32px 14px; }
+  .phones figure:nth-child(2), .phones figure:nth-child(4) { margin-top: 48px; }
+  .phones figure:nth-child(3) { margin-top: 0; }
+  .phones .shot { border-radius: 16px; }
+  .phones figcaption { font-size: 15px; }
+  .phones figcaption b { font-size: 18px; }
+  .book { padding-block: 88px; }
+  .book .say, .book ol { grid-column: 1 / -1; }
+  .book h2 { font-size: 10vw; }
+  .book ol li { font-size: 22px; }
+  .book ol li small { font-size: 15px; }
+  .price { padding-block: 96px; min-height: 0; }
+  .price h2 { font-size: 12.4vw; }
+  .price h2 .tag { display: table; margin: .08em 0; }
+  .price .base { display: block; margin-top: 40px; }
+  .price .base p { font-size: 17px; }
+  .price .base .act { justify-items: stretch; text-align: left; margin-top: 32px; }
+  .price .base .act .btn { width: 100%; }
+  .qa { display: block; }
+  .qa + .qa { margin-top: 52px; }
+  .qa h3, .qa .q { font-size: 24px; }
+  .qa p { margin-top: 12px; font-size: 17px; }
+  .close { min-height: 80svh; padding-top: 88px; }
+  .close h2 { font-size: 15vw; }
+  .close .base { display: block; }
+  .close .base p { font-size: 17px; }
+  .close .base .btn { width: 100%; margin-top: 28px; }
+  .foot { min-height: 80svh; padding-bottom: 104px; }
+  .foot .top { flex-direction: column; }
+  .foot .big { font-size: 11.4vw; white-space: nowrap; }
+  .foot .meta { grid-template-columns: 1fr; font-size: 13px; }
+  .foot .meta > * { text-align: left !important; }
+  .bar {
+    display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; min-height: 60px;
+    background: var(--lime); color: var(--dark); align-items: center; justify-content: center; gap: .5em;
+    font-weight: 700; font-size: 17px; text-decoration: none; padding-bottom: env(safe-area-inset-bottom);
+    transition: transform var(--t-ui) var(--ease-out);
+  }
+  .bar.hide { transform: translateY(110%); }
+  .bar:active { background: #c6d34a; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; }
+  html.js [data-rise], html.js [data-open], html.js .hero h1 .line > span, html.js .hero .after, html.js .hero .chip {
+    transform: none !important; clip-path: none !important; transition: opacity 300ms ease !important;
+  }
+  .frame img, .show .cap { transition: opacity 300ms ease !important; }
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <a class="wordmark" href="#top" aria-label="Tenis Pro, inicio"><span class="ball" aria-hidden="true"></span>Tenis Pro</a>
+  <nav aria-label="Secciones">
+    <ul>
+      <li><a href="#camino">Mi camino</a></li>
+      <li><a href="#plan">El plan</a></li>
+      <li><a href="#dentro">La app</a></li>
+      <li><a href="#precio">Precio</a></li>
+      <li><a href="#preguntas">Preguntas</a></li>
+    </ul>
+  </nav>
+  <a class="btn" href="https://pay.hotmart.com/O107951429N">Quiero el Pack</a>
+</header>
+
+<main id="top">
+  <section class="hero" aria-labelledby="h-hero">
+    <h1 id="h-hero">
+      <span class="line"><span>De la Selección</span></span>
+      <span class="line"><span>a tu cancha</span></span>
+    </h1>
+    <p class="lede after">Soy Luigy Nieves, nº 3 de Colombia en tenis en silla de ruedas. Este es mi plan de 8 semanas en e-book y app, para jugar de pie o en silla.</p>
+    <div class="actions after">
+      <a class="btn" href="https://pay.hotmart.com/O107951429N">Quiero el Pack · US$24,99 <span class="arrow" aria-hidden="true">→</span></a>
+      <a class="link" href="#plan">Mira las 8 semanas</a>
+    </div>
+    <div class="chips" aria-label="Así se ve la app">
+      <div class="chip c1" data-ui>
+        Semana 3 de 8
+        <b>Hoy: saque</b>
+        <span class="meter" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i></span>
+      </div>
+      <div class="chip c2" data-ui>
+        Primeros saques adentro
+        <b>14 de 20</b>
+      </div>
+      <div class="chip c3" data-ui>
+        ¿Cómo juegas?
+        <span class="seg" role="group" aria-label="Cómo juegas">
+          <button type="button" data-mode="pie" aria-pressed="false">De pie</button>
+          <button type="button" data-mode="silla" aria-pressed="true">En silla</button>
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <section class="about wrap" id="camino" aria-label="Quién soy">
+    <div class="facts">
+      <div data-rise><b>Bogotá</b>Centro de Alto Rendimiento</div>
+      <div data-rise style="--d:80ms"><b>Desde los 14</b>jugando en silla</div>
+      <div data-rise style="--d:160ms"><b>6 horas</b>de entreno al día</div>
+    </div>
+    <div class="bio">
+      <p data-rise><strong>Soy Luigy Nieves.</strong> Juego tenis en silla de ruedas desde los 14 años, entreno seis horas al día en Bogotá y hoy soy el nº 3 de Colombia. He jugado dos Mundiales con la Selección.</p>
+      <p class="soft" data-rise style="--d:90ms">Este plan es lo que me ha funcionado, ordenado en 8 semanas para que lo uses en tu cancha. Sirve si juegas de pie y si juegas en silla, y si estás empezando también.</p>
+    </div>
+  </section>
+
+  <section class="journey wrap" aria-labelledby="h-camino">
+    <div class="intro">
+      <h2 id="h-camino" data-rise>Del primer torneo al Mundial</h2>
+      <p data-rise style="--d:90ms">Trece años de cancha. Cada foto es un momento que me trajo hasta aquí.</p>
+    </div>
+
+    <article class="row r1">
+      <span class="year" aria-hidden="true" data-rise>2013</span>
+      <div class="text" data-rise style="--d:70ms"><h3>Cali</h3><p>Mi primer torneo: el Colombia Open.</p></div>
+      <figure data-open style="--d:140ms"><img src="img/journey-2013-cali.webp" width="960" height="540" alt="Luigy Nieves en su silla deportiva en una cancha en Cali, 2013" loading="lazy"></figure>
+    </article>
+    <article class="row r2 flip">
+      <span class="year" aria-hidden="true" data-rise>2017</span>
+      <div class="text" data-rise style="--d:70ms"><h3>São Paulo</h3><p>Bronce en los Parapanamericanos Juveniles.</p></div>
+      <figure data-open style="--d:140ms"><img src="img/journey-2017-sao-paulo.webp" width="900" height="1200" alt="Luigy Nieves con su medalla y la bandera de Colombia en São Paulo, 2017" loading="lazy"></figure>
+    </article>
+    <article class="row r3">
+      <span class="year" aria-hidden="true" data-rise>2018</span>
+      <div class="text" data-rise style="--d:70ms"><h3>Apeldoorn, Holanda</h3><p>Bronce en la Copa del Mundo juvenil.</p></div>
+      <figure data-open style="--d:140ms"><img src="img/journey-2018-apeldoorn.webp" width="960" height="720" alt="Luigy Nieves con su medalla y flores en la Copa del Mundo juvenil de Apeldoorn, 2018" loading="lazy"></figure>
+    </article>
+    <article class="row r4 flip">
+      <span class="year" aria-hidden="true" data-rise>2018</span>
+      <div class="text" data-rise style="--d:70ms"><h3>Brasil</h3><p>Campeón juniors del Guga Kuerten.</p></div>
+      <figure data-open style="--d:140ms"><img src="img/journey-2018-brasil.webp" width="584" height="1200" alt="Luigy Nieves junto a Guga Kuerten con su trofeo en Brasil, 2018" loading="lazy"></figure>
+    </article>
+    <article class="row r5">
+      <span class="year" aria-hidden="true" data-rise>2025</span>
+      <div class="text" data-rise style="--d:70ms"><h3>Turquía</h3><p>Mi primer Mundial con la Selección.</p></div>
+      <figure data-open style="--d:140ms"><img src="img/journey-2025-turquia.webp" width="1200" height="900" alt="La Selección Colombia de tenis en silla de ruedas en el Mundial de Turquía, 2025" loading="lazy"></figure>
+    </article>
+    <article class="row r6 flip">
+      <span class="year" aria-hidden="true" data-rise>2026</span>
+      <div class="text" data-rise style="--d:70ms"><h3>Orlando, EE. UU.</h3><p>Segundo Mundial con la Selección.</p></div>
+      <figure data-open style="--d:140ms"><img src="img/journey-2026-orlando.webp" width="1200" height="900" alt="Luigy Nieves con la Selección Colombia en el Mundial de Orlando, 2026" loading="lazy"></figure>
+    </article>
+    <article class="row goal">
+      <span class="year" aria-hidden="true" data-rise>2027</span>
+      <div class="text" data-rise style="--d:70ms"><h3>Lima, y después Los Ángeles</h3><p>La meta: los Juegos Parapanamericanos de 2027 y los Paralímpicos de 2028.</p></div>
+    </article>
+
+    <div class="video" data-rise>
+      <button type="button" id="play" aria-label="Ver el video de mi historia en YouTube">
+        <img src="https://i.ytimg.com/vi/Zr4reVtvrxQ/hqdefault.jpg" width="480" height="360" alt="" loading="lazy">
+        <span class="play">▶ Mira mi historia</span>
+      </button>
+      <p class="soft">Video en YouTube. Se carga solo cuando le das play.</p>
+    </div>
+  </section>
+
+  <section class="show" id="app" aria-labelledby="h-show" data-stage="1">
+    <div class="stage">
+      <div class="center">
+        <div class="text">
+          <h2 id="h-show">Tu plan en el bolsillo</h2>
+          <ul class="caps">
+            <li class="cap c-a"><b>Abres la app y sabes qué toca</b>La pantalla Hoy te muestra la sesión del día, con cuánto dura y qué ejercicios lleva.</li>
+            <li class="cap c-b"><b>Cada sesión, paso a paso</b>Los ejercicios vienen con sus series, repeticiones y tiempos, ajustados a tu nivel.</li>
+            <li class="cap c-c"><b>Las 8 semanas a la vista</b>Marcas cada sesión y ves cuánto llevas del plan. Tu progreso se guarda en tu celular.</li>
+          </ul>
+        </div>
+        <div class="frame" data-ui><img src="img/app-hoy.webp" width="780" height="1688" alt="Pantalla Hoy de la app Tenis Pro: la sesión del día, la racha y tu camino de 8 semanas" loading="lazy"></div>
+      </div>
+    </div>
+    <div class="markers" aria-hidden="true"><i style="top:0"></i><i style="top:100vh"></i><i style="top:200vh"></i></div>
+  </section>
+
+  <section class="plan" id="plan" aria-labelledby="h-plan">
+    <div class="left">
+      <h2 id="h-plan" class="swap"><span class="wk">Semana 3:</span> <span class="wt">Saque</span></h2>
+      <p class="goal swap">Lanzamiento al aro, las 3 zonas y empuñadura continental. 50–80 saques por sesión.</p>
+      <p class="chap swap">Capítulo 2: El saque</p>
+      <div class="choose">
+        <span class="seg" role="group" aria-label="Cómo juegas">
+          <button type="button" data-mode="pie" aria-pressed="false">De pie</button>
+          <button type="button" data-mode="silla" aria-pressed="true">En silla</button>
+        </span>
+        <span class="seg" role="group" aria-label="Tu nivel">
+          <button type="button" data-level="principiante" aria-pressed="false">Principiante</button>
+          <button type="button" data-level="intermedio" aria-pressed="true">Intermedio</button>
+        </span>
+      </div>
+    </div>
+    <div class="right">
+      <div class="app" data-ui aria-live="polite">
+        <div class="app-top"><span>Tenis Pro · Plan</span><span class="mode" id="app-mode">En silla · intermedio</span></div>
+        <h4 class="swap" id="app-title">Semana 3</h4>
+        <p class="sub swap" id="app-sub">5 sesiones: 3 de tenis y 2 de físico</p>
+        <ul class="sess swap" id="app-sess"><li class="tenis"><button type="button">Tenis · Saque <span class="tag">~30 min</span></button></li></ul>
+      </div>
+    </div>
+    <div class="track">
+      <label for="week">Arrastra para ver cada semana del plan</label>
+      <input id="week" type="range" min="1" max="8" step="1" value="3" aria-valuetext="Semana 3: Saque">
+      <div class="ticks" id="ticks"></div>
+    </div>
+  </section>
+
+  <section class="inside wrap" id="dentro" aria-labelledby="h-dentro">
+    <div class="head">
+      <h2 id="h-dentro" data-rise>Mira la app por dentro</h2>
+      <p data-rise style="--d:90ms">Estas son pantallas reales de la app. Se instala en tu celular desde el navegador y funciona sin internet después de entrar.</p>
+    </div>
+    <div class="phones">
+      <figure data-rise><div class="shot" data-ui><img src="img/app-sesion.webp" width="780" height="1688" alt="Sesión de saque en la app, con calentamiento, temporizador y lo más importante del capítulo" loading="lazy"></div><figcaption><b>Sesión</b>Cada ejercicio explicado, con temporizador y la versión para silla.</figcaption></figure>
+      <figure data-rise style="--d:80ms"><div class="shot" data-ui><img src="img/app-medir-graficas.webp" width="780" height="1688" alt="Tabla de control en la app con gráficas de progreso por prueba" loading="lazy"></div><figcaption><b>Medir</b>10 pruebas en la semana 1 y en la 8. Ves tu mejora en gráficas.</figcaption></figure>
+      <figure data-rise style="--d:160ms"><div class="shot" data-ui><img src="img/app-fisico-silla.webp" width="780" height="1688" alt="Temporizador de la rutina física con ilustración de un jugador en silla" loading="lazy"></div><figcaption><b>Físico</b>Rutinas con temporizador e ilustraciones de pie o en silla.</figcaption></figure>
+      <figure data-rise style="--d:240ms"><div class="shot" data-ui><img src="img/app-mente-apoyo.webp" width="780" height="1688" alt="Zona mental en la app con el diario del partido y un mensaje de apoyo" loading="lazy"></div><figcaption><b>Mente</b>La rutina entre puntos, el diario del partido y mensajes de apoyo.</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="book" aria-labelledby="h-libro">
+    <div class="grid wrap">
+      <div class="say">
+        <h2 id="h-libro" data-rise>38 páginas, 8 capítulos</h2>
+        <p data-rise style="--d:80ms">El e-book en PDF trae la técnica, los ejercicios y el plan para imprimir. Lo lees en el celular o lo llevas a la cancha.</p>
+        <a class="btn dark" href="https://pay.hotmart.com/O107951429N" data-rise style="--d:160ms">Quiero el Pack <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+      <ol>
+        <li data-rise>Golpes de fondo<small>Derecha y revés con la técnica que uso en torneos.</small></li>
+        <li data-rise style="--d:60ms">Saque<small>Primero un saque fiable; la potencia llega después.</small></li>
+        <li data-rise style="--d:120ms">Volea y red<small>Cuándo subir a la red y cómo cerrar el punto.</small></li>
+        <li data-rise style="--d:180ms">Desplazamiento<small>De pie: split step. En silla: empuje, giro y frenado.</small></li>
+        <li data-rise style="--d:240ms">Preparación física<small>Hombros, core y velocidad, en versión de pie y en silla.</small></li>
+        <li data-rise style="--d:300ms">Táctica de partido<small>Cómo leer al rival y a qué golpe jugarle.</small></li>
+        <li data-rise style="--d:360ms">Mentalidad<small>Respiración, rutina entre puntos y cómo competir con nervios.</small></li>
+        <li data-rise style="--d:420ms">Plan de 8 semanas<small>Sesión por sesión, listo para imprimir.</small></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="price" id="precio" aria-labelledby="h-precio">
+    <h2 id="h-precio" data-rise>Todo el plan <span class="tag">US$24,99</span></h2>
+    <div class="base">
+      <p data-rise style="--d:80ms">El e-book en PDF de 38 páginas y la app Tenis Pro con el plan de 8 semanas, la medición de golpes, las rutinas con temporizador y la zona mental. Antes <s>US$29,99</s>. Acceso inmediato y garantía de 7 días.</p>
+      <div class="act" data-rise style="--d:160ms">
+        <a class="btn" href="https://pay.hotmart.com/O107951429N">Quiero el Pack <span class="arrow" aria-hidden="true">→</span></a>
+        <a class="link" href="https://pay.hotmart.com/F107907094B">O solo el e-book por US$9,99</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq wrap" id="preguntas" aria-labelledby="h-faq">
+    <div class="qa"><h2 id="h-faq" class="q soft">Preguntas</h2></div>
+    <div class="qa" data-rise><h3>¿Cómo recibo la app?</h3><p>Al comprar el Pack te llega un correo con tu código personal y el link de la app. Abres el link, escribes tu código y listo.</p></div>
+    <div class="qa" data-rise><h3>¿Cómo recibo el e-book?</h3><p>Al pagar en Hotmart te llega un correo con el acceso y la descarga es inmediata.</p></div>
+    <div class="qa" data-rise><h3>¿Sirve si juego en silla de ruedas?</h3><p>Sí. Lo escribí como jugador en silla: el desplazamiento y la preparación física traen su versión de pie y su versión en silla.</p></div>
+    <div class="qa" data-rise><h3>¿Sirve si estoy empezando?</h3><p>Sí. Empieza por la técnica de cada golpe y sube de nivel semana a semana. Al abrir la app eliges si juegas de pie o en silla y tu nivel, y el plan se ajusta a ti.</p></div>
+    <div class="qa" data-rise><h3>¿Funciona en iPhone y Android?</h3><p>Sí. En iPhone se instala desde Safari con "Agregar a inicio". En Android, desde Chrome.</p></div>
+    <div class="qa" data-rise><h3>¿Necesito internet?</h3><p>Solo la primera vez, para activar tu código. Después la app funciona sin conexión.</p></div>
+    <div class="qa" data-rise><h3>¿En qué formato viene el libro?</h3><p>Es un PDF de 38 páginas. Lo lees en el celular o lo imprimes.</p></div>
+    <div class="qa" data-rise><h3>¿Cómo funciona la garantía?</h3><p>Tienes 7 días. Si no te sirve, pides el reembolso en Hotmart.</p></div>
+  </section>
+
+  <section class="close" aria-labelledby="h-close">
+    <h2 id="h-close" data-rise>Tu turno en la cancha</h2>
+    <div class="base">
+      <p data-rise style="--d:80ms">Cada compra me ayuda a llegar a Lima 2027 y a Los Ángeles 2028.</p>
+      <a class="btn dark" href="https://pay.hotmart.com/O107951429N" data-rise style="--d:160ms">Empezar el plan <span class="arrow" aria-hidden="true">→</span></a>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="top">
+    <div class="notes">
+      <span class="wordmark"><span class="ball" aria-hidden="true"></span>Tenis Pro</span>
+      <span>Un plan de Luigy Nieves, Selección Colombia de tenis en silla de ruedas.</span>
+      <span>Bogotá, Colombia. Entreno en el Centro de Alto Rendimiento.</span>
+    </div>
+    <a class="link" href="#top">Volver arriba</a>
+  </div>
+  <a class="big" href="https://www.instagram.com/luigynieves/"><small>Sígueme en Instagram</small>@luigynieves</a>
+  <div class="meta">
+    <span>Bogotá, Colombia</span>
+    <span>Pagos seguros con Hotmart</span>
+    <span>© 2026 Luigy Nieves</span>
+  </div>
+</footer>
+
+<a class="bar hide" href="https://pay.hotmart.com/O107951429N">Quiero el Pack · US$24,99</a>
+
+<script src="plan-data.js"></script>
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches
+  const $ = (s, r = document) => r.querySelector(s)
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)]
+
+  // Titular con máscara al cargar
+  requestAnimationFrame(() => $('.hero').classList.add('go'))
+
+  // Entradas de cada sección, una sola vez
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target) }
+  }, { rootMargin: '0px 0px -10% 0px' })
+  $$('[data-rise],[data-open]').forEach((el) => io.observe(el))
+
+  // La app: un marco, tres distancias
+  const show = $('.show')
+  const marks = $$('.markers i', show)
+  const so = new IntersectionObserver((entries) => {
+    for (const e of entries) if (e.isIntersecting) show.dataset.stage = String(marks.indexOf(e.target) + 1)
+  }, { rootMargin: '-50% 0px -50% 0px' })
+  marks.forEach((m) => so.observe(m))
+
+  // Fotos de Mi camino: se mueven un poco al bajar
+  const figs = $$('.row figure')
+  if (!reduce && figs.length) {
+    let ticking = false
+    const drift = () => {
+      const h = innerHeight
+      for (const f of figs) {
+        const r = f.getBoundingClientRect()
+        if (r.bottom < -100 || r.top > h + 100) continue
+        const off = (r.top + r.height / 2 - h / 2) / h
+        f.style.setProperty('--py', `${(off * -40).toFixed(1)}px`)
+        f.style.setProperty('--rot', `${((f.closest('.flip') ? -3 : 2.5) * (0.4 + Math.min(1, Math.abs(off) * 1.6))).toFixed(2)}deg`)
+      }
+      ticking = false
+    }
+    addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(drift) } }, { passive: true })
+    drift()
+  }
+
+  // Video bajo demanda
+  $('#play').addEventListener('click', (ev) => {
+    const f = document.createElement('iframe')
+    f.src = 'https://www.youtube-nocookie.com/embed/Zr4reVtvrxQ?autoplay=1'
+    f.title = 'Mi historia, Luigy Nieves'
+    f.allow = 'autoplay; encrypted-media; picture-in-picture'
+    f.allowFullscreen = true
+    ev.currentTarget.replaceWith(f)
+  })
+
+  // El plan real, semana por semana
+  const plan = window.PLAN || []
+  const state = { week: 3, mode: 'silla', level: 'intermedio', open: 0 }
+  const range = $('#week'), ticks = $('#ticks')
+  plan.forEach((w) => {
+    const b = document.createElement('button')
+    b.type = 'button'; b.textContent = w.title; b.dataset.week = w.n
+    b.addEventListener('click', () => { state.week = w.n; state.open = 0; range.value = w.n; render(true) })
+    ticks.append(b)
+  })
+  const label = { pie: 'De pie', silla: 'En silla' }
+
+  function sessionsHtml(w) {
+    const key = `${state.mode}-${state.level}`
+    return w.sessions.map((s, i) => {
+      const v = s[key]
+      const name = s.kind === 'fisico' ? `Físico · ${s.focus}` : `${s.title} · ${s.focus}`
+      const ex = i === state.open
+        ? `<ul class="ex">${v.ex.map(([n, d]) => `<li><span>${n}${d ? `<small>${d}</small>` : ''}</span></li>`).join('')}</ul>`
+        : ''
+      return `<li class="${s.kind}${i === state.open ? ' open' : ''}"><button type="button" data-i="${i}" aria-expanded="${i === state.open}">Día ${i + 1} · ${name}<span class="tag">~${v.min} min</span></button>${ex}</li>`
+    }).join('')
+  }
+
+  function render(animate) {
+    const w = plan[state.week - 1]
+    if (!w) return
+    const apply = () => {
+      $('.plan .wk').textContent = `Semana ${w.n}:`
+      $('.plan .wt').textContent = w.title
+      $('.plan .goal').textContent = w.goal
+      $('.plan .chap').textContent = w.chapter || 'Repaso de todos los capítulos'
+      $('#app-title').textContent = `Semana ${w.n} de 8`
+      $('#app-sub').textContent = '5 sesiones: 3 de tenis y 2 de físico'
+      $('#app-sess').innerHTML = sessionsHtml(w)
+      $('#app-mode').textContent = `${label[state.mode]} · ${state.level}`
+      $$('.swap').forEach((el) => el.classList.remove('out'))
+    }
+    range.style.setProperty('--fill', `${((state.week - 1) / 7) * 100}%`)
+    range.setAttribute('aria-valuetext', `Semana ${w.n}: ${w.title}`)
+    $$('button', ticks).forEach((b) => b.setAttribute('aria-current', String(+b.dataset.week === state.week)))
+    $$('[data-mode]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === state.mode)))
+    $$('[data-level]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.level === state.level)))
+    if (animate && !reduce) { $$('.swap').forEach((el) => el.classList.add('out')); setTimeout(apply, 180) } else apply()
+  }
+
+  range.addEventListener('input', () => { state.week = +range.value; state.open = 0; render(true) })
+  $('#app-sess').addEventListener('click', (e) => {
+    const b = e.target.closest('button[data-i]'); if (!b) return
+    state.open = +b.dataset.i; $('#app-sess').innerHTML = sessionsHtml(plan[state.week - 1])
+  })
+  $$('[data-mode]').forEach((b) => b.addEventListener('click', () => { state.mode = b.dataset.mode; render(false) }))
+  $$('[data-level]').forEach((b) => b.addEventListener('click', () => { state.level = b.dataset.level; render(false) }))
+  render(false)
+
+  // Barra fija en celular: se oculta en el hero y en el precio
+  const bar = $('.bar')
+  const hidden = new Set()
+  const bo = new IntersectionObserver((entries) => {
+    for (const e of entries) e.isIntersecting ? hidden.add(e.target) : hidden.delete(e.target)
+    bar.classList.toggle('hide', hidden.size > 0)
+  })
+  ;['.hero', '#precio', '.close'].forEach((s) => bo.observe($(s)))
+})()
+</script>
+</body>
+</html>
