@@ -9,13 +9,18 @@ export function normalizeCode(code: string) {
   return code.trim().toUpperCase().replace(/\s+/g, '')
 }
 
-export type RedeemResult = 'ok' | 'invalid' | 'offline' | 'unconfigured'
+export type RedeemResult = 'ok' | 'invalid' | 'offline' | 'error' | 'unconfigured'
 
 export async function redeemCode(code: string): Promise<RedeemResult> {
   if (!supabase) return 'unconfigured'
-  const { data, error } = await supabase.rpc('redeem_code', { p_code: normalizeCode(code) })
-  if (error) return navigator.onLine ? 'invalid' : 'offline'
-  return data === true ? 'ok' : 'invalid'
+  try {
+    const { data, error } = await supabase.rpc('redeem_code', { p_code: normalizeCode(code) })
+    // Un error del servidor o de la red no significa que el código sea malo.
+    if (error) return navigator.onLine ? 'error' : 'offline'
+    return data === true ? 'ok' : 'invalid'
+  } catch {
+    return navigator.onLine ? 'error' : 'offline'
+  }
 }
 
 export async function submitTestimonial(input: {

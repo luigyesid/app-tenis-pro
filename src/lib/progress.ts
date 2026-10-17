@@ -19,19 +19,7 @@ export function isWeekComplete(s: AppState, n: number) {
   return !!w && w.sessions.every((x) => s.done[x.id])
 }
 
-/** Días seguidos con al menos una sesión completada; sigue viva si la última fue hoy o ayer. */
-export function streak(s: AppState) {
-  const days = new Set(Object.values(s.done))
-  const d = new Date()
-  if (!days.has(today(d))) d.setDate(d.getDate() - 1)
-  let n = 0
-  while (days.has(today(d))) {
-    n++
-    d.setDate(d.getDate() - 1)
-  }
-  return n
-}
-
+/** Si hoy se completó al menos una sesión. */
 export function doneToday(s: AppState) {
   const t = today()
   return Object.values(s.done).some((d) => d === t)
@@ -39,9 +27,13 @@ export function doneToday(s: AppState) {
 
 /** Semana (4 u 8) cuyo testimonio toca pedir ahora, si hay alguna. */
 export function testimonialDue(s: AppState) {
+  if (s.testimonialSnooze === today()) return null
   return [8, 4].find((n) => isWeekComplete(s, n) && !s.testimonialAsked.includes(n)) ?? null
 }
 
+/** Ejercicios que aplican a cómo juegas, con el nombre y el texto de silla cuando cambian. */
 export function visibleExercises(session: Session, mode: Mode) {
-  return session.exercises.filter((e) => !e.only || e.only === mode)
+  return session.exercises
+    .filter((e) => !e.only || e.only === mode)
+    .map((e) => (mode === 'silla' ? { ...e, name: e.nameSilla ?? e.name, how: e.howSilla ?? e.how } : e))
 }

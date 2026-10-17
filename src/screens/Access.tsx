@@ -5,6 +5,7 @@ import { update } from '../lib/store'
 const messages = {
   invalid: 'Ese código no es válido. Revisa el correo de tu compra en Hotmart.',
   offline: 'Necesitas internet la primera vez que entras. Después funciona sin conexión.',
+  error: 'No pudimos revisar el código ahora. Revisa tu conexión e inténtalo otra vez.',
   unconfigured: 'La app todavía no está conectada a la base de datos.',
 }
 
@@ -28,7 +29,7 @@ export function Access() {
   }
 
   return (
-    <main className="screen center">
+    <main className="screen center stagger access">
       <div className="brand">
         <span className="ball" aria-hidden />
         <h1>TENIS PRO</h1>

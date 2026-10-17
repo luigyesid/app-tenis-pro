@@ -5,8 +5,11 @@ export type Level = 'principiante' | 'intermedio'
 export interface Exercise {
   id: string
   name: string
-  /** Texto común; `pie`/`silla` lo reemplazan cuando la ejecución cambia. */
   how: string
+  /** Reemplazan `name`/`how` para quien juega en silla cuando el ejercicio es otro. */
+  nameSilla?: string
+  howSilla?: string
+  /** Notas que se suman debajo de `how` según cómo juegas. */
   pie?: string
   silla?: string
   /** Solo se muestra a quien juega de esta forma. */
@@ -46,6 +49,8 @@ export interface ControlTest {
   /** Si tiene `outOf`, se mide con contador Dentro/Fuera hasta ese número. */
   outOf?: number
   unit: string
+  /** Unidad en singular, para "1 segundo". */
+  unitOne?: string
 }
 
 export interface MindTool {
