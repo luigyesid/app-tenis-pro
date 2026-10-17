@@ -22,12 +22,14 @@ export interface AppState {
   /** Pruebas de la tabla de control (semana 1 vs semana 8). */
   measures: Measure[]
   diary: DiaryEntry[]
+  /** sessionId -> ejercicios marcados como hechos dentro de la sesión. */
+  checked: Record<string, string[]>
   /** Semanas (4 y 8) en las que ya se pidió el testimonio. */
   testimonialAsked: number[]
 }
 
 const KEY = 'tenispro:v2'
-const empty: AppState = { done: {}, measures: [], diary: [], testimonialAsked: [] }
+const empty: AppState = { done: {}, measures: [], diary: [], checked: {}, testimonialAsked: [] }
 
 function load(): AppState {
   try {

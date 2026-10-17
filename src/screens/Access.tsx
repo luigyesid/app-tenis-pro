@@ -28,7 +28,7 @@ export function Access() {
   }
 
   return (
-    <main className="screen center">
+    <main className="screen center stagger access">
       <div className="brand">
         <span className="ball" aria-hidden />
         <h1>TENIS PRO</h1>

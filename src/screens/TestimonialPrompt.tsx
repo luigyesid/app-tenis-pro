@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { submitTestimonial } from '../lib/supabase'
 import { update, useAppState } from '../lib/store'
+import { haptic } from '../ui/theme'
 
 export function TestimonialPrompt({ week }: { week: number }) {
   const s = useAppState()
@@ -38,7 +39,7 @@ export function TestimonialPrompt({ week }: { week: number }) {
               aria-checked={rating === n}
               aria-label={`${n} de 5`}
               className={n <= rating ? 'on' : ''}
-              onClick={() => setRating(n)}
+              onClick={() => (haptic(8), setRating(n))}
             >
               ★
             </button>

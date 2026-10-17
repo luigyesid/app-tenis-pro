@@ -4,12 +4,14 @@ import { today, update, useAppState } from '../lib/store'
 
 export function Mind() {
   return (
-    <main className="screen">
-      <p className="eyebrow">Mente</p>
-      <h1 className="title">Zona mental</h1>
+    <main className="screen stagger">
+      <div>
+        <p className="eyebrow">Mente</p>
+        <h1 className="title">Zona mental</h1>
+      </div>
       <Diary />
       {mindTools.map((t) => (
-        <section key={t.id} className="card stack">
+        <section key={t.id} className="card stack mind-card">
           <h3>{t.title}</h3>
           {t.id === 'rutina' ? (
             <ol className="steps">

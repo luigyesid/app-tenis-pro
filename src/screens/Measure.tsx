@@ -2,15 +2,20 @@ import { useState } from 'react'
 import { controlTests } from '../content/plan'
 import type { ControlTest } from '../content/types'
 import { today, update, useAppState } from '../lib/store'
+import { IconChevron } from '../ui/icons'
+import { Ring } from '../ui/Ring'
+import { haptic } from '../ui/theme'
 
 export function Measure() {
   const s = useAppState()
   const [open, setOpen] = useState<string | null>(null)
 
   return (
-    <main className="screen">
-      <p className="eyebrow">Medir</p>
-      <h1 className="title">Tabla de control</h1>
+    <main className="screen stagger">
+      <div>
+        <p className="eyebrow">Medir</p>
+        <h1 className="title">Tabla de control</h1>
+      </div>
       <p className="muted">Haz estas pruebas en la semana 1 y repítelas en la semana 8. Lo que no se mide, no mejora.</p>
       {controlTests.map((t) => {
         const logs = s.measures.filter((m) => m.testId === t.id)
@@ -18,7 +23,7 @@ export function Measure() {
         const last = logs[logs.length - 1]
         const isOpen = open === t.id
         return (
-          <section key={t.id} className="card stack">
+          <section key={t.id} className={`card stack test ${isOpen ? 'open' : ''}`}>
             <button className="test-head" onClick={() => setOpen(isOpen ? null : t.id)} aria-expanded={isOpen}>
               <span>
                 <strong>{t.name}</strong>
@@ -30,7 +35,10 @@ export function Measure() {
                       : `Inicio: ${fmt(t, first.value)} · Ahora: ${fmt(t, last.value)}`}
                 </span>
               </span>
-              {logs.length > 1 && <Delta from={first.value} to={last.value} />}
+              <span className="row">
+                {logs.length > 1 && <Delta from={first.value} to={last.value} />}
+                <IconChevron size={20} className="week-chevron" />
+              </span>
             </button>
             {isOpen && <Recorder test={t} onDone={() => setOpen(null)} />}
           </section>
@@ -65,16 +73,21 @@ function Recorder({ test, onDone }: { test: ControlTest; onDone: () => void }) {
       <div className="stack">
         <p className="muted small">Toca por cada bola: adentro del objetivo o afuera.</p>
         <div className="counter">
-          <button className="primary big" disabled={full} onClick={() => (setMade(made + 1), setTotal(total + 1))}>
+          <button className="primary big" disabled={full} onClick={() => (haptic(10), setMade(made + 1), setTotal(total + 1))}>
             Adentro
           </button>
-          <button className="big" disabled={full} onClick={() => setTotal(total + 1)}>
+          <button className="big" disabled={full} onClick={() => (haptic(6), setTotal(total + 1))}>
             Afuera
           </button>
         </div>
-        <p className="center-text">
-          <strong>{made}</strong> de {total} · faltan {test.outOf - total}
-        </p>
+        <div className="counter-ring">
+          <Ring value={total / test.outOf} size={84} stroke={7} color="var(--green)">
+            <strong key={made} className="pop">{made}</strong>
+          </Ring>
+          <span className="muted small">
+            adentro de {total} · faltan {test.outOf - total}
+          </span>
+        </div>
         <div className="row">
           <button className="primary" disabled={!full} onClick={() => save(made)}>
             Guardar

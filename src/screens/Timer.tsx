@@ -1,17 +1,23 @@
 import { useEffect, useRef, useState } from 'react'
+import { IconPause, IconPlay, IconReset } from '../ui/icons'
+import { Ring } from '../ui/Ring'
+import { haptic } from '../ui/theme'
 
-function beep() {
+function beep(freq = 880) {
   try {
     const ctx = new AudioContext()
     const o = ctx.createOscillator()
-    o.frequency.value = 880
-    o.connect(ctx.destination)
+    const g = ctx.createGain()
+    o.frequency.value = freq
+    g.gain.setValueAtTime(0.15, ctx.currentTime)
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25)
+    o.connect(g).connect(ctx.destination)
     o.start()
-    o.stop(ctx.currentTime + 0.2)
-    navigator.vibrate?.(200)
+    o.stop(ctx.currentTime + 0.25)
   } catch {
     // Sin audio disponible.
   }
+  haptic(200)
 }
 
 function fmt(sec: number) {
@@ -34,21 +40,24 @@ export function Timer({ seconds, sets = 1, rest = 30 }: { seconds: number; sets?
 
   useEffect(() => {
     if (left > 0) return
-    beep()
     if (resting) {
+      beep(1040)
       setResting(false)
       setLeft(seconds)
     } else if (set < sets) {
+      beep(660)
       setSet(set + 1)
       setResting(true)
       setLeft(rest)
     } else {
+      beep(1040)
       setRunning(false)
       setLeft(0)
     }
   }, [left, resting, set, sets, seconds, rest])
 
   const finished = !running && left === 0
+  const total = resting ? rest : seconds
   function reset() {
     setRunning(false)
     setSet(1)
@@ -57,20 +66,43 @@ export function Timer({ seconds, sets = 1, rest = 30 }: { seconds: number; sets?
   }
 
   return (
-    <div className={`timer ${resting ? 'resting' : ''}`}>
-      <div className="timer-time">{fmt(Math.max(0, left))}</div>
-      <div className="muted small">
-        {finished ? '¡Listo!' : resting ? 'Descanso' : sets > 1 ? `Serie ${set} de ${sets}` : running ? 'En marcha' : 'Listo para empezar'}
-      </div>
-      <div className="row">
-        {finished ? (
-          <button onClick={reset}>Repetir</button>
-        ) : (
-          <button className="primary" onClick={() => setRunning(!running)}>
-            {running ? 'Pausa' : 'Iniciar'}
-          </button>
+    <div className={`timer ${resting ? 'resting' : ''} ${running ? 'running' : ''}`}>
+      <Ring
+        value={finished ? 1 : left / total}
+        size={92}
+        stroke={8}
+        color={resting ? 'var(--muted)' : 'var(--accent, var(--ball))'}
+      >
+        <span className="timer-time">{fmt(Math.max(0, left))}</span>
+      </Ring>
+      <div className="timer-side">
+        <span className="timer-label">
+          {finished ? '¡Listo! 🎾' : resting ? 'Descanso' : sets > 1 ? `Serie ${set} de ${sets}` : running ? 'En marcha' : 'Listo'}
+        </span>
+        {sets > 1 && (
+          <span className="dots" aria-hidden>
+            {Array.from({ length: sets }, (_, i) => (
+              <i key={i} className={i < set - (resting || finished ? 0 : 1) || finished ? 'on' : ''} />
+            ))}
+          </span>
         )}
-        {!finished && <button onClick={reset}>Reiniciar</button>}
+        <div className="row">
+          {finished ? (
+            <button className="pill-btn" onClick={reset}>
+              <IconReset size={18} /> Repetir
+            </button>
+          ) : (
+            <>
+              <button className="pill-btn primary" onClick={() => (haptic(10), setRunning(!running))}>
+                {running ? <IconPause size={18} /> : <IconPlay size={18} />}
+                {running ? 'Pausa' : 'Iniciar'}
+              </button>
+              <button className="icon-btn" onClick={reset} aria-label="Reiniciar">
+                <IconReset size={18} />
+              </button>
+            </>
+          )}
+        </div>
       </div>
     </div>
   )

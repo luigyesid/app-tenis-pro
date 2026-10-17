@@ -31,9 +31,11 @@ export function Fitness() {
   const preset = list.find((p) => p.name === active)
 
   return (
-    <main className="screen">
-      <p className="eyebrow">Físico</p>
-      <h1 className="title">Temporizador</h1>
+    <main className="screen stagger">
+      <div>
+        <p className="eyebrow">Físico</p>
+        <h1 className="title">Temporizador</h1>
+      </div>
       <div className="tabs-inline">
         {list.map((p) => (
           <button
@@ -49,7 +51,7 @@ export function Fitness() {
         ))}
       </div>
       {preset && <p className="muted">{preset.how}</p>}
-      <div className="card">
+      <div className="card timer-card">
         <Timer key={`${active}-${cfg.work}-${cfg.rest}-${cfg.rounds}`} seconds={cfg.work} sets={cfg.rounds} rest={cfg.rest} />
       </div>
       <div className="card row fields">
