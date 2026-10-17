@@ -22,6 +22,9 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png,woff2}'],
+        // La landing de ventas vive en /landing y no es parte de la app.
+        globIgnores: ['landing/**'],
+        navigateFallbackDenylist: [/^\/landing/],
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/fonts\.(googleapis|gstatic)\.com\/.*/,
