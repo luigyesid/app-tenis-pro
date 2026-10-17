@@ -8,7 +8,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          UA='Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 Chrome/130 Mobile Safari/537.36'
-          for u in https://tenispro-app.netlify.app/ https://tenispro-app.netlify.app/landing/; do
-            curl -s -A "$UA" "$u" -o /tmp/b; echo "RESULT $u bytes=$(wc -c </tmp/b)"; grep -aio '[^"<>]\{0,80\}netlify[^"<>]\{0,80\}' /tmp/b | grep -v tenispro-app.netlify.app | sed 's/^/MATCH /' | head -20
-          done
+          curl -s https://tenispro-app.netlify.app/landing/ | grep -ai -B2 -A8 'hud' | head -40 | sed 's/^/HTML /'
+          curl -s "https://tenispro-app.netlify.app/.netlify/scripts/hud?variant=public" -o /tmp/h.js; echo "JS bytes=$(wc -c </tmp/h.js)"
+          grep -aoE 'customElements\.define\("[^"]+"|localStorage[^;]{0,80}|data-[a-z-]*(hide|disable|badge)[a-z-]*|(hide|dismiss|disable)[A-Za-z]{0,30}|settings?[^;]{0,60}badge[^;]{0,60}' /tmp/h.js | sort -u | head -40 | sed 's/^/JS /'
