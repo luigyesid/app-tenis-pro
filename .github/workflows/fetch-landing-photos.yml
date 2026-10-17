@@ -1,0 +1,31 @@
+name: Copiar fotos de la landing
+on:
+  push:
+    branches: [claude/project-thread-xzb392]
+    paths: ['.github/workflows/fetch-landing-photos.yml']
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Descargar y convertir
+        run: |
+          mkdir -p /tmp/sh && cd /tmp/sh && npm init -y >/dev/null && npm i sharp@0.33.5 >/dev/null
+          cd "$GITHUB_WORKSPACE"
+          B=https://tenis-pro-ocho-semanas.lovable.app/__l5e/assets-v1
+          for p in 982ce071-6bf9-40d5-b022-53c8a5befa1e/journey-2013-cali.webp 12e671b0-431c-4cc5-b844-61b897e21b48/journey-2017-sao-paulo.jpg d9bcb55b-c51a-4690-b6c3-e3b218a02abb/journey-2018-apeldoorn.jpg 88d20c90-6ab2-4351-be88-7576caaf0e45/journey-2018-brasil.jpg ecd04bb2-e145-4ef0-a150-b4215e216da3/journey-2025-turquia.jpg 756cfb57-00ab-4cc2-b92e-6f75eacb0668/journey-2026-orlando.jpg; do
+            f=$(basename "$p"); curl -fsSL -o "/tmp/$f" "$B/$p"
+            NODE_PATH=/tmp/sh/node_modules node -e "require('sharp')(process.argv[1]).resize({width:1200,height:1200,fit:'inside',withoutEnlargement:true}).webp({quality:80}).toFile(process.argv[2]).then(i=>console.log(process.argv[2],i.width+'x'+i.height,i.size))" "/tmp/$f" "landing/img/${f%.*}.webp"
+          done
+          curl -fsSL -o /tmp/og.png "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/lovp_3pt583mjcc9sbt78vf6n42p5hs/43c5da7bc5d8f9e215b2556188b0e2b7_1792113072093.png" && NODE_PATH=/tmp/sh/node_modules node -e "require('sharp')('/tmp/og.png').resize(1200,630,{fit:'cover'}).jpeg({quality:85}).toFile('landing/img/og.jpg').then(i=>console.log('og',i.width+'x'+i.height,i.size))" || echo "og no disponible"
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add landing/img
+          git commit -m "Landing: fotos de Mi camino copiadas al repo" && git push
