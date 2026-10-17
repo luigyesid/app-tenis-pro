@@ -145,7 +145,14 @@ h1, h2, h3 { font-weight: 700; letter-spacing: -0.035em; line-height: 0.98; }
 .row .text { grid-column: 2; max-width: 40ch; padding-top: 4px; }
 .row h3 { font-size: clamp(28px, 3vw, 48px); }
 .row p { margin-top: 14px; font-size: 18px; }
-.row figure { grid-column: 3; overflow: hidden; background: var(--surface); }
+.row figure { grid-column: 3; overflow: hidden; background: var(--surface); transform: translateY(var(--py, 0px)) rotate(var(--rot, 0deg)); transition: clip-path 900ms var(--ease-out) var(--d, 0ms); will-change: transform; }
+.row:nth-of-type(odd) figure { --rot: 2.5deg; }
+.row:nth-of-type(even) figure { --rot: -3deg; }
+/* Filas pares: la foto pasa a la izquierda para que el recorrido zigzaguee */
+.row.flip { grid-template-columns: auto 1fr 35%; }
+.row.flip figure { grid-column: 1; grid-row: 1; }
+.row.flip .text { grid-column: 2; grid-row: 1; justify-self: end; text-align: right; }
+.row.flip .year { grid-column: 3; grid-row: 1; justify-self: start; padding: 0 0 0 8px; }
 .row figure img { width: 100%; height: 100%; object-fit: cover; transition: transform 900ms var(--ease-soft); }
 .row:hover figure img { transform: scale(1.04); }
 .row.r1 figure { width: min(540px, 36vw); aspect-ratio: 3/2; }
@@ -155,7 +162,7 @@ h1, h2, h3 { font-weight: 700; letter-spacing: -0.035em; line-height: 0.98; }
 .row.r5 figure { width: min(560px, 38vw); aspect-ratio: 3/2; }
 .row.r6 figure { width: min(420px, 29vw); aspect-ratio: 1; }
 .row.goal .year { color: var(--lime); }
-.video { margin: 140px 0 0 35%; max-width: 860px; }
+.video { margin: 140px auto 0; max-width: 960px; }
 .video button {
   position: relative; display: block; width: 100%; aspect-ratio: 16/9; border: 0; padding: 0; cursor: pointer;
   background: var(--surface); overflow: hidden;
@@ -326,7 +333,6 @@ html.js .hero.go .chip { opacity: 1; }
 
   .row figure { width: 30vw !important; }
   .book .say, .book ol { grid-column: 1 / -1; }
-  .video { margin-left: 0; }
 }
 
 @media (max-width: 760px) {
@@ -356,6 +362,9 @@ html.js .hero.go .chip { opacity: 1; }
   .row.r2 figure, .row.r5 figure { width: 72%; justify-self: end; }
   .row.r3 figure, .row.r6 figure { width: 58%; }
   .video { margin: 88px 0 0; }
+  .row.flip { grid-template-columns: 1fr; }
+  .row.flip .year, .row.flip .text, .row.flip figure { grid-column: 1; grid-row: auto; justify-self: start; text-align: left; padding: 0; }
+  .row.flip figure { justify-self: end; }
   .show .stage { padding: 24px var(--margin); }
   .show .center { grid-template-columns: 1fr; justify-items: center; text-align: center; row-gap: 20px; }
   .show h2 { font-size: 10vw; }
@@ -498,7 +507,7 @@ html.js .hero.go .chip { opacity: 1; }
       <div class="text" data-rise style="--d:70ms"><h3>Cali</h3><p>Mi primer torneo: el Colombia Open.</p></div>
       <figure data-open style="--d:140ms"><img src="https://tenis-pro-ocho-semanas.lovable.app/__l5e/assets-v1/982ce071-6bf9-40d5-b022-53c8a5befa1e/journey-2013-cali.webp" width="960" height="540" alt="Luigy Nieves en su silla deportiva en una cancha en Cali, 2013" loading="lazy"></figure>
     </article>
-    <article class="row r2">
+    <article class="row r2 flip">
       <span class="year" aria-hidden="true" data-rise>2017</span>
       <div class="text" data-rise style="--d:70ms"><h3>São Paulo</h3><p>Bronce en los Parapanamericanos Juveniles.</p></div>
       <figure data-open style="--d:140ms"><img src="https://tenis-pro-ocho-semanas.lovable.app/__l5e/assets-v1/12e671b0-431c-4cc5-b844-61b897e21b48/journey-2017-sao-paulo.jpg" width="1440" height="1920" alt="Luigy Nieves con su medalla y la bandera de Colombia en São Paulo, 2017" loading="lazy"></figure>
@@ -508,7 +517,7 @@ html.js .hero.go .chip { opacity: 1; }
       <div class="text" data-rise style="--d:70ms"><h3>Apeldoorn, Holanda</h3><p>Bronce en la Copa del Mundo juvenil.</p></div>
       <figure data-open style="--d:140ms"><img src="https://tenis-pro-ocho-semanas.lovable.app/__l5e/assets-v1/d9bcb55b-c51a-4690-b6c3-e3b218a02abb/journey-2018-apeldoorn.jpg" width="960" height="720" alt="Luigy Nieves con su medalla y flores en la Copa del Mundo juvenil de Apeldoorn, 2018" loading="lazy"></figure>
     </article>
-    <article class="row r4">
+    <article class="row r4 flip">
       <span class="year" aria-hidden="true" data-rise>2018</span>
       <div class="text" data-rise style="--d:70ms"><h3>Brasil</h3><p>Campeón juniors del Guga Kuerten.</p></div>
       <figure data-open style="--d:140ms"><img src="https://tenis-pro-ocho-semanas.lovable.app/__l5e/assets-v1/88d20c90-6ab2-4351-be88-7576caaf0e45/journey-2018-brasil.jpg" width="640" height="1316" alt="Luigy Nieves junto a Guga Kuerten con su trofeo en Brasil, 2018" loading="lazy"></figure>
@@ -518,7 +527,7 @@ html.js .hero.go .chip { opacity: 1; }
       <div class="text" data-rise style="--d:70ms"><h3>Turquía</h3><p>Mi primer Mundial con la Selección.</p></div>
       <figure data-open style="--d:140ms"><img src="https://tenis-pro-ocho-semanas.lovable.app/__l5e/assets-v1/ecd04bb2-e145-4ef0-a150-b4215e216da3/journey-2025-turquia.jpg" width="1600" height="1200" alt="La Selección Colombia de tenis en silla de ruedas en el Mundial de Turquía, 2025" loading="lazy"></figure>
     </article>
-    <article class="row r6">
+    <article class="row r6 flip">
       <span class="year" aria-hidden="true" data-rise>2026</span>
       <div class="text" data-rise style="--d:70ms"><h3>Orlando, EE. UU.</h3><p>Segundo Mundial con la Selección.</p></div>
       <figure data-open style="--d:140ms"><img src="https://tenis-pro-ocho-semanas.lovable.app/__l5e/assets-v1/756cfb57-00ab-4cc2-b92e-6f75eacb0668/journey-2026-orlando.jpg" width="1920" height="1440" alt="Luigy Nieves con la Selección Colombia en el Mundial de Orlando, 2026" loading="lazy"></figure>
@@ -659,9 +668,9 @@ html.js .hero.go .chip { opacity: 1; }
     </div>
     <a class="link" href="#top">Volver arriba</a>
   </div>
-  <a class="big" href="https://wa.me/573113886295"><small>Escríbeme por WhatsApp</small>+57 311 388 6295</a>
+  <a class="big" href="https://www.instagram.com/luigynieves/"><small>Sígueme en Instagram</small>@luigynieves</a>
   <div class="meta">
-    <span><a class="link" href="https://www.instagram.com/luigynieves/">Instagram @luigynieves</a></span>
+    <span>Bogotá, Colombia</span>
     <span>Pagos seguros con Hotmart</span>
     <span>© 2026 Luigy Nieves</span>
   </div>
@@ -692,6 +701,25 @@ html.js .hero.go .chip { opacity: 1; }
     for (const e of entries) if (e.isIntersecting) show.dataset.stage = String(marks.indexOf(e.target) + 1)
   }, { rootMargin: '-50% 0px -50% 0px' })
   marks.forEach((m) => so.observe(m))
+
+  // Fotos de Mi camino: se mueven un poco al bajar
+  const figs = $$('.row figure')
+  if (!reduce && figs.length) {
+    let ticking = false
+    const drift = () => {
+      const h = innerHeight
+      for (const f of figs) {
+        const r = f.getBoundingClientRect()
+        if (r.bottom < -100 || r.top > h + 100) continue
+        const off = (r.top + r.height / 2 - h / 2) / h
+        f.style.setProperty('--py', `${(off * -40).toFixed(1)}px`)
+        f.style.setProperty('--rot', `${((f.closest('.flip') ? -3 : 2.5) * (0.4 + Math.min(1, Math.abs(off) * 1.6))).toFixed(2)}deg`)
+      }
+      ticking = false
+    }
+    addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(drift) } }, { passive: true })
+    drift()
+  }
 
   // Video bajo demanda
   $('#play').addEventListener('click', (ev) => {
