@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { pick, sessionCheers, weekCheers } from './content/cheers'
 import type { Session, Week } from './content/types'
 import { testimonialDue } from './lib/progress'
 import { useAppState } from './lib/store'
@@ -58,8 +59,8 @@ export default function App() {
           window.scrollTo(0, 0)
           setParty(
             weekDone
-              ? { title: `¡Semana ${open.week.number} completa!`, subtitle: 'Así se construye un top 3.' }
-              : { title: '¡Sesión lista!', subtitle: 'Un día más cerca de tu mejor tenis.' },
+              ? { title: `¡Semana ${open.week.number} completa!`, subtitle: pick(weekCheers) }
+              : { title: '¡Sesión lista!', subtitle: pick(sessionCheers) },
           )
         }}
       />
