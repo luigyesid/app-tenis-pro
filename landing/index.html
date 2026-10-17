@@ -186,7 +186,7 @@ h1, h2, h3 { font-weight: 700; letter-spacing: -0.035em; line-height: 0.98; }
 .show[data-stage="2"] .frame img { transform: scale(1.75); transform-origin: 50% 20%; }
 .show[data-stage="3"] .frame img { transform: scale(2.4); transform-origin: 50% 74%; }
 .markers { position: absolute; inset: 0; pointer-events: none; }
-.markers i { position: absolute; left: 0; height: 1px; width: 1px; } /* taste-skill-ignore: marcadores invisibles */
+.markers i { position: absolute; left: 0; width: 1px; height: 100vh; } /* taste-skill-ignore: marcadores invisibles, uno por etapa */
 
 /* El plan: arrastra las 8 semanas (lo vivo) */
 .plan { display: grid; grid-template-columns: 1fr 1fr; min-height: 92svh; }
@@ -551,7 +551,7 @@ html.js .hero.go .chip { opacity: 1; }
         <div class="frame" data-ui><img src="img/app-hoy.webp" width="780" height="1688" alt="Pantalla Hoy de la app Tenis Pro: la sesión del día, la racha y tu camino de 8 semanas" loading="lazy"></div>
       </div>
     </div>
-    <div class="markers" aria-hidden="true"><i style="top:0"></i><i style="top:100vh"></i><i style="top:175vh"></i></div>
+    <div class="markers" aria-hidden="true"><i style="top:0"></i><i style="top:100vh"></i><i style="top:200vh"></i></div>
   </section>
 
   <section class="plan" id="plan" aria-labelledby="h-plan">
