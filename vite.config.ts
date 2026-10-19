@@ -21,6 +21,9 @@ export default defineConfig({
         icons: [{ src: 'favicon.svg', sizes: 'any', type: 'image/svg+xml', purpose: 'any maskable' }],
       },
       workbox: {
+        // Cada versión nueva toma el control sola; sin esto se queda esperando a que se cierren todas las pestañas.
+        skipWaiting: true,
+        clientsClaim: true,
         globPatterns: ['**/*.{js,css,html,svg,png,woff2}'],
         // La landing de ventas vive en /landing y no es parte de la app.
         globIgnores: ['landing/**'],
