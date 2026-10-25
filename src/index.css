@@ -505,20 +505,41 @@ input:focus, textarea:focus, button:focus-visible, summary:focus-visible { outli
   background: var(--carbon); border-radius: 14px;
 }
 .ill path, .ill circle, .ill ellipse, .ill rect { fill: none; stroke-linecap: round; stroke-linejoin: round; }
-.ill-body path { stroke: var(--text); stroke-width: 5; }
-.ill-body circle { fill: var(--text); stroke: none; }
-.ill-ghost path { stroke: var(--text); stroke-width: 5; opacity: 0.22; }
-.ill-ghost circle { fill: var(--text); opacity: 0.22; }
-.ill-ghost .ill-chair circle, .ill-ghost .ill-chair path { fill: none; stroke: var(--muted); opacity: 0.25; }
-.ill-chair circle, .ill-chair path { stroke: var(--muted); stroke-width: 3; }
-.ill-body .ill-chair circle { fill: none; stroke: var(--muted); }
-.ill-ground { stroke: #3a3a3a; stroke-width: 2; }
+/* Figura ilustrada: trazos gruesos con puntas redondas en colores de la marca. */
+.ill-fig { --skin: #c68863; --skin-back: #9c6647; --shirt: var(--ball); --shirt-back: #a7b43f; --shorts: #2f5fb8; --shorts-back: #1f428a; }
+.ill .ill-skin { stroke: var(--skin); stroke-width: 8; }
+.ill .ill-skin.back { stroke: var(--skin-back); }
+.ill .ill-shirt { stroke: var(--shirt); stroke-width: 9.5; }
+.ill .ill-shirt.back { stroke: var(--shirt-back); }
+.ill .ill-shorts { stroke: var(--shorts); stroke-width: 11; }
+.ill .ill-shorts.back { stroke: var(--shorts-back); }
+.ill .ill-torso { stroke: var(--shirt); stroke-width: 16; }
+.ill .ill-shoe { stroke: #f5f5f0; stroke-width: 7; }
+.ill .ill-shoe.back { stroke: #c9c9c1; }
+.ill .ill-hand { fill: var(--skin); stroke: none; }
+.ill .ill-face { fill: var(--skin); stroke: none; }
+.ill .ill-hair { fill: #2b1d14; stroke: none; }
+.ill .ill-visor { stroke: var(--red); stroke-width: 3.5; }
+.ill-ghost { opacity: 0.25; }
+.ill .ill-tire { stroke: #6b6b66; stroke-width: 4.5; }
+.ill .ill-rim { stroke: #8a8a84; stroke-width: 1.5; }
+.ill .ill-spokes { stroke: #8a8a84; stroke-width: 1; opacity: 0.6; }
+.ill .ill-hub { fill: #c9c9c1; stroke: none; }
+.ill .ill-caster { stroke: #8a8a84; stroke-width: 2.5; }
+.ill .ill-chair-frame { stroke: #b8b8b0; stroke-width: 3.5; }
+.ill .ill-floor { fill: rgba(46, 125, 50, 0.45); stroke: none; }
+.ill-floor-line { stroke: rgba(255, 255, 255, 0.7); stroke-width: 1.5; }
 .ill-arrow { stroke: var(--accent-text, var(--ball)); stroke-width: 3; stroke-dasharray: 6 5; }
 .ill .ill-head { fill: var(--accent-text, var(--ball)); stroke: none; }
 .ill .ill-ball { fill: var(--ball); stroke: none; }
+.ill .ill-seam { stroke: #fff; stroke-width: 1; opacity: 0.8; }
 .ill-band { stroke: var(--red); stroke-width: 3; }
 .ill-post { stroke: #555; stroke-width: 6; }
-.ill-racket path, .ill-racket ellipse { stroke: var(--ball); stroke-width: 3; }
+.ill .ill-grip { stroke: #f5f5f0; stroke-width: 4.5; }
+.ill .ill-shaft { stroke: var(--red); stroke-width: 3; }
+.ill .ill-frame { stroke: var(--red); stroke-width: 2.8; }
+.ill .ill-strings-bg { fill: rgba(245, 245, 240, 0.08); stroke: none; }
+.ill .ill-strings { stroke: #f5f5f0; stroke-width: 0.6; opacity: 0.6; }
 .ill .ill-court { fill: rgba(46, 125, 50, 0.25); stroke: #e8e8e0; stroke-width: 2; }
 .ill-court-line { stroke: #e8e8e0; stroke-width: 1.5; opacity: 0.7; }
 .ill-net { stroke: #fff; stroke-width: 4; }

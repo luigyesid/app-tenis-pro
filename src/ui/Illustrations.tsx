@@ -1,5 +1,5 @@
 /**
- * Ilustraciones simples de cómo hacer cada ejercicio: figuras de palitos (de pie o en silla)
+ * Ilustraciones de cómo hacer cada ejercicio: una figura deportiva dibujada (de pie o en silla)
  * y diagramas de cancha vistos desde arriba. Todo en SVG, funciona sin internet.
  */
 import type { Mode } from '../content/types'
@@ -23,65 +23,124 @@ function line(a: P, b: P) {
   return `M${a[0]} ${a[1]}L${b[0]} ${b[1]}`
 }
 
-/** Figura de palitos. `ghost` dibuja una posición previa más tenue para mostrar el movimiento. */
-function Figure({ pose, ghost = false, chair = false }: { pose: Pose; ghost?: boolean; chair?: boolean }) {
-  const { head, neck, hip, elbows, hands, knees, feet } = pose
-  const d = [
-    line(neck, hip),
-    line(neck, elbows[0]),
-    line(elbows[0], hands[0]),
-    line(neck, elbows[1]),
-    line(elbows[1], hands[1]),
-    line(hip, knees[0]),
-    line(knees[0], feet[0]),
-    line(hip, knees[1]),
-    line(knees[1], feet[1]),
-  ].join('')
+const at = (a: P, b: P, k: number): P => [a[0] + (b[0] - a[0]) * k, a[1] + (b[1] - a[1]) * k]
+
+/** Brazo o pierna: la primera parte con ropa (manga o short) y el resto piel. */
+function Limb({ from, mid, to, cloth, clothTo, back }: { from: P; mid: P; to: P; cloth: string; clothTo: number; back: boolean }) {
+  const k = back ? ' back' : ''
+  const end = at(from, mid, clothTo)
   return (
-    <g className={ghost ? 'ill-ghost' : 'ill-body'}>
-      {chair && <Chair hip={hip} />}
-      <path d={d} />
-      <circle cx={head[0]} cy={head[1]} r={9} />
+    <g>
+      <path className={`ill-skin${k}`} d={line(from, mid) + line(mid, to)} />
+      <path className={`${cloth}${k}`} d={line(from, end)} />
     </g>
   )
 }
 
-/** Silla de tenis vista de lado, alineada con la cadera de la figura. */
+/**
+ * Figura deportiva ilustrada. Usa las mismas articulaciones de siempre pero dibuja un cuerpo con volumen:
+ * camiseta en el color de la marca, short, piel, zapatillas y cabeza con pelo.
+ * `front` dice qué brazo y qué pierna quedan delante del cuerpo (el de la raqueta suele ser el 0).
+ */
+function Figure({ pose, ghost = false, chair = false, front = 1 }: { pose: Pose; ghost?: boolean; chair?: boolean; front?: 0 | 1 }) {
+  const { head, neck, hip, elbows, hands, knees, feet } = pose
+  const backIdx = front === 1 ? 0 : 1
+  const shoe = (i: number) => {
+    // La zapatilla apunta hacia delante, en la dirección en que mira la figura.
+    const dir = Math.sign(feet[i][0] - knees[i][0]) || 1
+    const toe: P = [feet[i][0] + 7 * (chair ? 1 : dir), feet[i][1]]
+    return <path className={`ill-shoe${i === backIdx ? ' back' : ''}`} d={line(feet[i], toe)} />
+  }
+  const arm = (i: number) => <Limb from={neck} mid={elbows[i]} to={hands[i]} cloth="ill-shirt" clothTo={0.45} back={i === backIdx} />
+  const leg = (i: number) => (
+    <g>
+      <Limb from={hip} mid={knees[i]} to={feet[i]} cloth="ill-shorts" clothTo={0.55} back={i === backIdx} />
+      {shoe(i)}
+    </g>
+  )
+  // La cara mira hacia donde está la mano adelantada.
+  const facing = hands[front][0] >= neck[0] ? 1 : -1
+  return (
+    <g className={ghost ? 'ill-fig ill-ghost' : 'ill-fig'}>
+      {chair && <Chair hip={hip} />}
+      {leg(backIdx)}
+      {arm(backIdx)}
+      <path className="ill-skin" d={line(neck, at(neck, head, 0.6))} />
+      <path className="ill-torso" d={line(at(neck, hip, 0.08), at(neck, hip, 0.86))} />
+      <path className="ill-shorts" d={line(at(neck, hip, 0.86), hip)} />
+      {leg(front)}
+      {arm(front)}
+      <circle className="ill-hand" cx={hands[front][0]} cy={hands[front][1]} r={3.6} />
+      <circle className="ill-face" cx={head[0]} cy={head[1]} r={9.5} />
+      <path
+        className="ill-hair"
+        d={`M${head[0] + 6 * facing} ${head[1] - 7.4}A9.5 9.5 0 0 ${facing > 0 ? 0 : 1} ${head[0] - 9 * facing} ${head[1] + 3}L${head[0] - 3 * facing} ${head[1] - 1}Z`}
+      />
+      <path className="ill-visor" d={`M${head[0] - 6 * facing} ${head[1] - 6}L${head[0] + 12 * facing} ${head[1] - 4}`} />
+    </g>
+  )
+}
+
+/** Silla de tenis vista de lado: rueda grande con caída, asiento, reposapiés y ruedita antivuelco. */
 function Chair({ hip }: { hip: P }) {
   const [x, y] = hip
+  const cx = x + 2
+  const cy = y + 22
   return (
     <g className="ill-chair">
-      <circle cx={x + 4} cy={y + 22} r={24} />
-      <circle cx={x + 4} cy={y + 22} r={3} />
-      <path d={`M${x - 14} ${y + 4}L${x + 24} ${y + 4}M${x - 12} ${y + 4}L${x - 16} ${y - 20}M${x + 22} ${y + 4}L${x + 40} ${y + 30}`} />
-      <circle cx={x + 42} cy={y + 42} r={4} />
+      <path className="ill-chair-frame" d={`M${x - 16} ${y + 6}H${x + 26}L${x + 42} ${y + 34}M${x - 14} ${y + 6}L${x - 18} ${y - 18}M${x - 10} ${y + 10}L${x - 30} ${y + 40}`} />
+      <circle className="ill-tire" cx={cx} cy={cy} r={25} />
+      <circle className="ill-rim" cx={cx} cy={cy} r={19} />
+      <path className="ill-spokes" d={`M${cx - 19} ${cy}H${cx + 19}M${cx} ${cy - 19}V${cy + 19}M${cx - 13} ${cy - 13}L${cx + 13} ${cy + 13}M${cx - 13} ${cy + 13}L${cx + 13} ${cy - 13}`} />
+      <circle className="ill-hub" cx={cx} cy={cy} r={3} />
+      <circle className="ill-caster" cx={x + 44} cy={y + 43} r={4} />
+      <circle className="ill-caster" cx={x - 31} cy={y + 43} r={3.5} />
     </g>
   )
 }
 
+/** Piso de cancha: franja verde con la línea de fondo. */
 function Ground() {
-  return <path className="ill-ground" d={`M10 ${H - 12}H${W - 10}`} />
+  return (
+    <g>
+      <rect className="ill-floor" x={0} y={H - 12} width={W} height={12} />
+      <path className="ill-floor-line" d={`M0 ${H - 11}H${W}`} />
+    </g>
+  )
 }
 
 function Arrow({ d, both = false }: { d: string; both?: boolean }) {
   return <path className="ill-arrow" d={d} markerEnd="url(#ill-head)" markerStart={both ? 'url(#ill-head)' : undefined} />
 }
 
-function Ball({ at, r = 5 }: { at: P; r?: number }) {
-  return <circle className="ill-ball" cx={at[0]} cy={at[1]} r={r} />
+/** Pelota de tenis con su costura. */
+function Ball({ at: [x, y], r = 5 }: { at: P; r?: number }) {
+  return (
+    <g>
+      <circle className="ill-ball" cx={x} cy={y} r={r} />
+      <path className="ill-seam" d={`M${x - r * 0.75} ${y - r * 0.6}Q${x} ${y} ${x - r * 0.75} ${y + r * 0.6}M${x + r * 0.75} ${y - r * 0.6}Q${x} ${y} ${x + r * 0.75} ${y + r * 0.6}`} />
+    </g>
+  )
 }
 
 function Band({ from, to }: { from: P; to: P }) {
   return <path className="ill-band" d={line(from, to)} />
 }
 
+/** Raqueta con mango, marco y cuerdas. */
 function Racket({ hand, angle = -45, len = 30 }: { hand: P; angle?: number; len?: number }) {
   const a = (angle * Math.PI) / 180
-  const tip: P = [hand[0] + Math.cos(a) * len, hand[1] + Math.sin(a) * len]
+  const throat: P = [hand[0] + Math.cos(a) * len, hand[1] + Math.sin(a) * len]
+  const c: P = [throat[0] + Math.cos(a) * 10, throat[1] + Math.sin(a) * 10]
   return (
     <g className="ill-racket">
-      <path d={line(hand, tip)} />
-      <ellipse cx={tip[0] + Math.cos(a) * 9} cy={tip[1] + Math.sin(a) * 9} rx={10} ry={7} transform={`rotate(${angle} ${tip[0] + Math.cos(a) * 9} ${tip[1] + Math.sin(a) * 9})`} />
+      <path className="ill-grip" d={line(hand, at(hand, throat, 0.45))} />
+      <path className="ill-shaft" d={line(at(hand, throat, 0.45), throat)} />
+      <g transform={`rotate(${angle} ${c[0]} ${c[1]})`}>
+        <ellipse className="ill-strings-bg" cx={c[0]} cy={c[1]} rx={11} ry={8} />
+        <path className="ill-strings" d={`M${c[0] - 6} ${c[1] - 6.5}V${c[1] + 6.5}M${c[0]} ${c[1] - 8}V${c[1] + 8}M${c[0] + 6} ${c[1] - 6.5}V${c[1] + 6.5}M${c[0] - 10} ${c[1] - 3}H${c[0] + 10}M${c[0] - 10} ${c[1] + 3}H${c[0] + 10}`} />
+        <ellipse className="ill-frame" cx={c[0]} cy={c[1]} rx={11} ry={8} />
+      </g>
     </g>
   )
 }
@@ -398,7 +457,7 @@ const drawings: Record<string, Drawing> = {
     return (
       <>
         {mode === 'pie' && <Ground />}
-        <Figure chair={mode === 'silla'} pose={pose} />
+        <Figure chair={mode === 'silla'} pose={pose} front={0} />
         <Racket hand={pose.hands[0]} angle={-40} />
         <Arrow d="M60 40C80 10 140 10 168 40" />
       </>
@@ -444,7 +503,7 @@ const drawings: Record<string, Drawing> = {
     return (
       <>
         {mode === 'pie' && <Ground />}
-        <Figure chair={mode === 'silla'} pose={pose} />
+        <Figure chair={mode === 'silla'} pose={pose} front={0} />
         <Racket hand={pose.hands[0]} angle={-70} len={22} />
         <Ball at={[pose.hands[1][0], 6]} />
       </>
@@ -519,8 +578,9 @@ const drawings: Record<string, Drawing> = {
     <>
       <path className="ill-post" d={`M186 10V${H - 12}`} />
       {mode === 'pie' && <Ground />}
-      <Figure chair={mode === 'silla'} pose={mode === 'pie' ? stand(110, { elbows: [[124, 56], [100, 62]], hands: [[134, 48], [100, 78]] }) : seated(100, { elbows: [[114, 54], [104, 66]], hands: [[124, 46], [110, 76]] })} />
-      <Ball at={[166, 40]} />
+      <Figure chair={mode === 'silla'} front={0} pose={mode === 'pie' ? stand(110, { elbows: [[124, 56], [100, 62]], hands: [[134, 48], [100, 78]] }) : seated(100, { elbows: [[114, 54], [104, 66]], hands: [[124, 46], [110, 76]] })} />
+      <Racket hand={mode === 'pie' ? [134, 48] : [124, 46]} angle={-25} len={14} />
+      <Ball at={[170, 40]} />
       <Arrow d="M150 30L176 36" />
       <Arrow d="M176 46L150 48" />
     </>
