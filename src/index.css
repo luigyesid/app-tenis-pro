@@ -553,18 +553,29 @@ input:focus, textarea:focus, button:focus-visible, summary:focus-visible { outli
 /* Imagen 3D del ejercicio: se acerca y aleja muy despacio para que no se vea quieta.
    El botón cambia a la ilustración con flechas de cómo moverse. */
 .ill-photo { position: relative; overflow: hidden; border-radius: 14px; background: #0e0b0a; aspect-ratio: 3 / 2; }
-.ill-photo img { display: block; width: 100%; height: 100%; object-fit: cover; animation: ill-breathe 7s ease-in-out infinite alternate; transform-origin: 50% 60%; }
+.ill-stage { position: absolute; inset: 0; animation: ill-breathe 7s ease-in-out infinite alternate; transform-origin: 50% 60%; }
+.ill-photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
 @keyframes ill-breathe { from { transform: scale(1) translateY(0); } to { transform: scale(1.06) translateY(-1.5%); } }
 .ill-moves { position: absolute; inset: 0; background: var(--carbon); opacity: 0; transform: scale(0.98); pointer-events: none; transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out); }
 .ill-moves .ill { width: 100%; height: 100%; max-height: none; border-radius: 0; }
 .show-moves .ill-moves { opacity: 1; transform: none; pointer-events: auto; }
+.ill-moves-over { background: none; transform: none; }
+.ill-photo:not(:has(.ill-stage)) img { animation: ill-breathe 7s ease-in-out infinite alternate; transform-origin: 50% 60%; }
+.show-moves .ill-stage { animation: none; }
+.mv { display: block; width: 100%; height: 100%; }
+.mv-out { fill: none; stroke: rgba(23, 23, 23, 0.85); stroke-width: 15; stroke-linecap: round; stroke-linejoin: round; }
+.mv-arrow { fill: none; stroke: var(--ball); stroke-width: 7; stroke-linecap: round; stroke-linejoin: round; }
+.mv-line { fill: none; stroke: var(--ball); stroke-width: 5; stroke-dasharray: 2 14; stroke-linecap: round; }
+.mv-head { fill: var(--ball); stroke: #171717; stroke-width: 1.2; stroke-linejoin: round; }
+.mv-label rect { fill: rgba(23, 23, 23, 0.86); stroke: var(--ball); stroke-width: 2; }
+.mv-label text { fill: var(--ball); font: 600 26px Rubik, system-ui, sans-serif; }
 .ill-toggle {
   position: absolute; left: 10px; bottom: 10px; min-height: 36px; padding: 6px 14px; border-radius: 999px;
   background: rgba(23, 23, 23, 0.78); color: var(--text); font: inherit; font-size: 0.8rem; font-weight: 700;
   border: 1px solid rgba(212, 225, 87, 0.5); backdrop-filter: blur(6px); transition: transform 160ms var(--ease-out);
 }
 .ill-toggle:active { transform: scale(0.97); }
-@media (prefers-reduced-motion: reduce) { .ill-photo img { animation: none; } .ill-moves { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .ill-stage, .ill-photo img { animation: none; } .ill-moves { transition: none; } }
 
 /* ---------- Gráficas de la tabla de control ---------- */
 .chart { margin: 0; display: grid; gap: 6px; }

@@ -3,6 +3,7 @@
  * y diagramas de cancha vistos desde arriba. Todo en SVG, funciona sin internet.
  */
 import { useState } from 'react'
+import { moves, type Mark } from './moves'
 import type { Mode } from '../content/types'
 
 type P = [number, number]
@@ -696,22 +697,79 @@ function Drawing({ name, kind, mode }: { name: string; kind: string; mode: Mode 
   )
 }
 
-/** Imagen 3D del ejercicio con un botón para ver el dibujo con flechas de cómo moverse. */
-function PhotoWithMoves({ name, file, kind, mode }: { name: string; file: string; kind?: string; mode: Mode }) {
-  const [moves, setMoves] = useState(false)
+/** Texto en una pastilla, sin salirse de los bordes de la imagen. */
+function Label({ t, x, y }: { t: string; x: number; y: number }) {
+  const w = t.length * 14.5 + 32
+  const cx = Math.min(Math.max(x, w / 2 + 16), 720 - w / 2 - 16)
+  const cy = Math.min(Math.max(y, 38), 442)
   return (
-    <div className={`ill-photo${moves ? ' show-moves' : ''}`}>
-      <img src={`/ejercicios/${file}.webp`} alt={`Cómo hacer: ${name}`} width={720} height={480} loading="lazy" decoding="async" />
-      {kind && (
-        <>
-          <div className="ill-moves" aria-hidden={!moves}>
-            <Drawing name={name} kind={kind} mode={mode} />
+    <g className="mv-label">
+      <rect x={cx - w / 2} y={cy - 22} width={w} height={44} rx={22} />
+      <text x={cx} y={cy} textAnchor="middle" dominantBaseline="central">
+        {t}
+      </text>
+    </g>
+  )
+}
+
+/** Flechas y textos de cómo moverse, dibujados encima de la imagen 3D. */
+function Marks({ marks }: { marks: Mark[] }) {
+  return (
+    <svg className="mv" viewBox="0 0 720 480" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs>
+        <marker id="mv-head" viewBox="-1 -1 12 12" refX="5" refY="5" markerWidth="4.4" markerHeight="4.4" orient="auto-start-reverse">
+          <path d="M0 0L10 5L0 10Z" className="mv-head" />
+        </marker>
+      </defs>
+      {marks.map((m, i) => (
+        <g key={i}>
+          {m.d && (
+            <>
+              <path d={m.d} className="mv-out" />
+              <path
+                d={m.d}
+                className={m.line ? 'mv-line' : 'mv-arrow'}
+                markerEnd={m.line ? undefined : 'url(#mv-head)'}
+                markerStart={m.both ? 'url(#mv-head)' : undefined}
+              />
+            </>
+          )}
+          {m.t && m.x !== undefined && m.y !== undefined && <Label t={m.t} x={m.x} y={m.y} />}
+        </g>
+      ))}
+    </svg>
+  )
+}
+
+/** Imagen 3D del ejercicio con un botón que le pone encima las flechas de cómo moverse. */
+function PhotoWithMoves({ name, file, kind, mode }: { name: string; file: string; kind?: string; mode: Mode }) {
+  const [show, setShow] = useState(false)
+  const marks = moves[file]
+  if (!marks && !kind) {
+    return (
+      <div className="ill-photo">
+        <img src={`/ejercicios/${file}.webp`} alt={`Cómo hacer: ${name}`} width={720} height={480} loading="lazy" decoding="async" />
+      </div>
+    )
+  }
+  return (
+    <div className={`ill-photo${show ? ' show-moves' : ''}`}>
+      <div className="ill-stage">
+        <img src={`/ejercicios/${file}.webp`} alt={`Cómo hacer: ${name}`} width={720} height={480} loading="lazy" decoding="async" />
+        {marks && (
+          <div className="ill-moves ill-moves-over" aria-hidden={!show}>
+            <Marks marks={marks} />
           </div>
-          <button type="button" className="ill-toggle" aria-pressed={moves} onClick={() => setMoves((v) => !v)}>
-            {moves ? 'Ver imagen' : 'Cómo moverte'}
-          </button>
-        </>
+        )}
+      </div>
+      {!marks && kind && (
+        <div className="ill-moves" aria-hidden={!show}>
+          <Drawing name={name} kind={kind} mode={mode} />
+        </div>
       )}
+      <button type="button" className="ill-toggle" aria-pressed={show} onClick={() => setShow((v) => !v)}>
+        {show ? 'Ver imagen' : 'Cómo moverte'}
+      </button>
     </div>
   )
 }
