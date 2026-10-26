@@ -2,6 +2,7 @@
  * Ilustraciones de cómo hacer cada ejercicio: una figura deportiva dibujada (de pie o en silla)
  * y diagramas de cancha vistos desde arriba. Todo en SVG, funciona sin internet.
  */
+import { useState } from 'react'
 import type { Mode } from '../content/types'
 
 type P = [number, number]
@@ -636,60 +637,89 @@ const byName: Record<string, string> = {
   Remates: 'serve',
 }
 
-/** Imágenes 3D del personaje en silla (public/ejercicios). Los ejercicios de cancha siguen con su diagrama. */
-const sillaPhoto: Record<string, string> = {
-  'Core sentado': 'core-sentado',
-  'Plancha (o core equivalente)': 'core-sentado',
-  Arrancadas: 'arrancadas',
-  Desplazamientos: 'desplazamientos',
-  'Giros y frenadas': 'giros-y-frenadas',
-  'Empuje continuo': 'empuje-continuo',
-  'Trabajo continuo suave': 'empuje-continuo',
-  Ochos: 'ochos',
-  Estiramientos: 'estiramientos',
-  Calentamiento: 'calentamiento',
-  'Rotación externa con banda': 'rotacion-externa-banda',
-  'Remo con banda': 'remo-banda',
-  'Y-T-W': 'y-t-w',
-  Leñador: 'lenador',
-  'Rotaciones con balón medicinal': 'lenador',
-  'Lanzamientos de balón medicinal': 'balon-medicinal',
-  'Sombra frente al espejo': 'sombra-golpes',
-  'Sombra de golpes': 'sombra-golpes',
-  'Lanzamiento al aro': 'saque',
-  'Bloque de saques': 'saque',
-  'Segundo saque bajo presión': 'saque',
-  Remates: 'remate',
-  'Voleas contra la pared': 'voleas-pared',
-  'Voleas seguidas contra la pared': 'voleas-pared',
-  'Peloteos largos': 'peloteo',
-  'Peloteo con las 4 fases': 'peloteo',
-  'La regla de la altura': 'peloteo',
-  'Peloteo cruzado de derecha': 'peloteo',
-  'Peloteo cruzado de revés': 'reves',
-  'Empujón de activación con señal': 'empujon-activacion',
-  'Split step con señal': 'empujon-activacion',
+/**
+ * Imágenes 3D del personaje (public/ejercicios), de pie y en silla.
+ * Los ejercicios de cancha siguen solo con su diagrama, porque ahí importa hacia dónde va la pelota.
+ */
+const photos: Record<string, { pie?: string; silla?: string }> = {
+  'Plancha frontal': { pie: 'plancha', silla: 'core-sentado' },
+  Plancha: { pie: 'plancha' },
+  'Plancha (o core equivalente)': { pie: 'plancha', silla: 'core-sentado' },
+  'Core sentado': { silla: 'core-sentado' },
+  'Sprints cortos': { pie: 'sprints' },
+  Arrancadas: { silla: 'arrancadas' },
+  Desplazamientos: { pie: 'desplazamientos', silla: 'desplazamientos' },
+  'Desplazamientos laterales': { pie: 'desplazamientos' },
+  'Giros y frenadas': { silla: 'giros-y-frenadas' },
+  'Trabajo continuo suave': { pie: 'trabajo-continuo', silla: 'empuje-continuo' },
+  'Empuje continuo': { silla: 'empuje-continuo' },
+  Ochos: { silla: 'ochos' },
+  Estiramientos: { pie: 'estiramientos', silla: 'estiramientos' },
+  Calentamiento: { pie: 'calentamiento', silla: 'calentamiento' },
+  'Rotación externa con banda': { pie: 'rotacion-externa-banda', silla: 'rotacion-externa-banda' },
+  'Remo con banda': { pie: 'remo-banda', silla: 'remo-banda' },
+  'Y-T-W': { pie: 'y-t-w', silla: 'y-t-w' },
+  Leñador: { pie: 'lenador', silla: 'lenador' },
+  'Rotaciones con balón medicinal': { pie: 'rotaciones-balon', silla: 'lenador' },
+  'Lanzamientos de balón medicinal': { pie: 'balon-medicinal', silla: 'balon-medicinal' },
+  'Sombra frente al espejo': { pie: 'sombra-golpes', silla: 'sombra-golpes' },
+  'Sombra de golpes': { pie: 'sombra-golpes', silla: 'sombra-golpes' },
+  'Saltar la cuerda': { pie: 'saltar-cuerda' },
+  Skipping: { pie: 'skipping' },
+  Sentadillas: { pie: 'sentadillas' },
+  Zancadas: { pie: 'zancadas' },
+  'Lanzamiento al aro': { pie: 'saque', silla: 'saque' },
+  'Bloque de saques': { pie: 'saque', silla: 'saque' },
+  'Segundo saque bajo presión': { pie: 'saque', silla: 'saque' },
+  Remates: { pie: 'remate', silla: 'remate' },
+  'Voleas contra la pared': { pie: 'voleas-pared', silla: 'voleas-pared' },
+  'Voleas seguidas contra la pared': { pie: 'voleas-pared', silla: 'voleas-pared' },
+  'Peloteos largos': { pie: 'peloteo', silla: 'peloteo' },
+  'Peloteo con las 4 fases': { pie: 'peloteo', silla: 'peloteo' },
+  'La regla de la altura': { pie: 'peloteo', silla: 'peloteo' },
+  'Peloteo cruzado de derecha': { pie: 'peloteo', silla: 'peloteo' },
+  'Peloteo cruzado de revés': { pie: 'reves', silla: 'reves' },
+  'Split step con señal': { pie: 'split-step', silla: 'empujon-activacion' },
+  'Empujón de activación con señal': { pie: 'split-step', silla: 'empujon-activacion' },
 }
 
-export function ExerciseIllustration({ name, mode }: { name: string; mode: Mode }) {
-  const photo = mode === 'silla' ? sillaPhoto[name] : undefined
-  if (photo) {
-    return (
-      <div className="ill-photo">
-        <img src={`/ejercicios/silla-${photo}.webp`} alt={`Cómo hacer: ${name}`} width={720} height={480} loading="lazy" decoding="async" />
-      </div>
-    )
-  }
-  const key = byName[name]
-  if (!key) return null
+function Drawing({ name, kind, mode }: { name: string; kind: string; mode: Mode }) {
   return (
-    <svg className="ill" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`Cómo hacer: ${name}`}>
+    <svg className="ill" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`Cómo moverte: ${name}`}>
       <defs>
         <marker id="ill-head" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
           <path d="M0 0L10 5L0 10Z" className="ill-head" />
         </marker>
       </defs>
-      {drawings[key](mode)}
+      {drawings[kind](mode)}
     </svg>
   )
+}
+
+/** Imagen 3D del ejercicio con un botón para ver el dibujo con flechas de cómo moverse. */
+function PhotoWithMoves({ name, file, kind, mode }: { name: string; file: string; kind?: string; mode: Mode }) {
+  const [moves, setMoves] = useState(false)
+  return (
+    <div className={`ill-photo${moves ? ' show-moves' : ''}`}>
+      <img src={`/ejercicios/${file}.webp`} alt={`Cómo hacer: ${name}`} width={720} height={480} loading="lazy" decoding="async" />
+      {kind && (
+        <>
+          <div className="ill-moves" aria-hidden={!moves}>
+            <Drawing name={name} kind={kind} mode={mode} />
+          </div>
+          <button type="button" className="ill-toggle" aria-pressed={moves} onClick={() => setMoves((v) => !v)}>
+            {moves ? 'Ver imagen' : 'Cómo moverte'}
+          </button>
+        </>
+      )}
+    </div>
+  )
+}
+
+export function ExerciseIllustration({ name, mode }: { name: string; mode: Mode }) {
+  const kind = byName[name]
+  const photo = photos[name]?.[mode]
+  if (photo) return <PhotoWithMoves name={name} file={`${mode}-${photo}`} kind={kind} mode={mode} />
+  if (!kind) return null
+  return <Drawing name={name} kind={kind} mode={mode} />
 }
