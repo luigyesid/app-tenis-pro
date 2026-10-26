@@ -83,12 +83,15 @@ export default async (req: Request) => {
 async function sendEmail(to: string, name: string | undefined, code: string) {
   const first = (name ?? '').split(' ')[0].replace(/[<>&"']/g, '')
   const appUrl = env('APP_URL') || 'https://tenispro-app.netlify.app'
-  const subject = 'Tu código para la app Tenis Pro'
-  const html = `<p>Hola${first ? ` ${first}` : ''}, gracias por comprar Tenis Pro en 8 Semanas.</p>
+  const subject = '¡Gracias por tu compra! Tu código para la app Tenis Pro'
+  const html = `<p>Hola${first ? ` ${first}` : ''}, de corazón, gracias por confiar en <em>Tenis Pro en 8 Semanas</em>.</p>
+<p>Con tu compra no solo empiezas a mejorar tu tenis: también me ayudas a seguir persiguiendo mis sueños en este deporte, que me ha dado tanto. Cada persona que se une a este plan me da más fuerza para seguir entrenando y compitiendo.</p>
+<p>Esto apenas comienza. Muy pronto vamos a mejorar la aplicación para que funcione aún mejor, y estamos preparando videos para que veas cada ejercicio paso a paso.</p>
 <p>Tu código de acceso es: <strong style="font-size:20px">${code}</strong></p>
 <p>Abre la app aquí y escríbelo: <a href="${appUrl}">${appUrl}</a></p>
 <p>Guárdala en la pantalla de inicio de tu celular para tenerla siempre a mano.</p>
-<p>Nos vemos en la cancha,<br>Luigy</p>`
+<p>Si tienes cualquier duda o quieres contarme cómo te va, escríbeme por Instagram <a href="https://www.instagram.com/luigynieves/">@luigynieves</a>.</p>
+<p>Nos vemos en la cancha,<br>Luigy Nieves</p>`
 
   try {
     if (env('GMAIL_USER') && env('GMAIL_APP_PASSWORD')) {
