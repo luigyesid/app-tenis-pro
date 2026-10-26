@@ -193,6 +193,9 @@ h1, h2, h3 { font-weight: 700; letter-spacing: -0.035em; line-height: 0.98; }
 .frame img { width: 100%; transition: transform 800ms var(--ease-in-out); transform-origin: 50% 14%; }
 .show[data-stage="2"] .frame img { transform: scale(1.3); transform-origin: 50% 24%; }
 .show[data-stage="3"] .frame img { transform: scale(1.45); transform-origin: 50% 80%; }
+.frame { position: relative; }
+.show[data-stage] .frame img.alt { position: absolute; inset: 0; transform: none; opacity: 0; transition: opacity 500ms ease; }
+.show[data-stage="2"] .frame img.alt { opacity: 1; }
 .markers { position: absolute; inset: 0; pointer-events: none; }
 .markers i { position: absolute; left: 0; width: 1px; height: 100vh; } /* taste-skill-ignore: marcadores invisibles, uno por etapa */
 
@@ -579,11 +582,11 @@ src="https://www.facebook.com/tr?id=1424392086547674&ev=PageView&noscript=1"
           <h2 id="h-show">Tu plan en el bolsillo</h2>
           <ul class="caps">
             <li class="cap c-a"><b>Abres la app y sabes qué toca</b>La pantalla Hoy te muestra la sesión del día, con cuánto dura y qué ejercicios lleva.</li>
-            <li class="cap c-b"><b>Cada sesión, paso a paso</b>Los ejercicios vienen con sus series, repeticiones y tiempos, ajustados a tu nivel.</li>
+            <li class="cap c-b"><b>Cada sesión, paso a paso</b>Cada ejercicio trae una imagen 3D con flechas de cómo moverte, y sus series y tiempos según tu nivel.</li>
             <li class="cap c-c"><b>Las 8 semanas a la vista</b>Marcas cada sesión y ves cuánto llevas del plan. Tu progreso se guarda en tu celular.</li>
           </ul>
         </div>
-        <div class="frame" data-ui><img src="img/app-hoy.webp" width="780" height="1688" alt="Pantalla Hoy de la app Tenis Pro: la sesión del día, la racha y tu camino de 8 semanas" loading="lazy"></div>
+        <div class="frame" data-ui><img src="img/app-hoy.webp" width="780" height="1688" alt="Pantalla Hoy de la app Tenis Pro: la sesión del día, tus sesiones hechas y tu camino de 8 semanas" loading="lazy"><img class="alt" src="img/app-sesion.webp" width="780" height="1688" alt="" loading="lazy"></div>
       </div>
     </div>
     <div class="markers" aria-hidden="true"><i style="top:0"></i><i style="top:100vh"></i><i style="top:200vh"></i></div>
@@ -626,10 +629,10 @@ src="https://www.facebook.com/tr?id=1424392086547674&ev=PageView&noscript=1"
       <p data-rise style="--d:90ms">Estas son pantallas reales de la app. Se instala en tu celular desde el navegador y funciona sin internet después de entrar.</p>
     </div>
     <div class="phones">
-      <figure data-rise><div class="shot" data-ui><img src="img/app-sesion.webp" width="780" height="1688" alt="Sesión de saque en la app, con calentamiento, temporizador y lo más importante del capítulo" loading="lazy"></div><figcaption><b>Sesión</b>Cada ejercicio explicado, con temporizador y la versión para silla.</figcaption></figure>
-      <figure data-rise style="--d:80ms"><div class="shot" data-ui><img src="img/app-medir-graficas.webp" width="780" height="1688" alt="Tabla de control en la app con gráficas de progreso por prueba" loading="lazy"></div><figcaption><b>Medir</b>10 pruebas en la semana 1 y en la 8. Ves tu mejora en gráficas.</figcaption></figure>
-      <figure data-rise style="--d:160ms"><div class="shot" data-ui><img src="img/app-fisico-silla.webp" width="780" height="1688" alt="Temporizador de la rutina física con ilustración de un jugador en silla" loading="lazy"></div><figcaption><b>Físico</b>Rutinas con temporizador e ilustraciones de pie o en silla.</figcaption></figure>
-      <figure data-rise style="--d:240ms"><div class="shot" data-ui><img src="img/app-mente-apoyo.webp" width="780" height="1688" alt="Zona mental en la app con el diario del partido y un mensaje de apoyo" loading="lazy"></div><figcaption><b>Mente</b>La rutina entre puntos, el diario del partido y mensajes de apoyo.</figcaption></figure>
+      <figure data-rise><div class="shot" data-ui><img src="img/app-sesion.webp" width="780" height="1688" alt="Sesión de saque en la app: el calentamiento con su imagen 3D de un jugador en silla y el botón Cómo moverte" loading="lazy"></div><figcaption><b>Sesión</b>Cada ejercicio con su imagen 3D, flechas de cómo moverte y la versión para silla.</figcaption></figure>
+      <figure data-rise style="--d:80ms"><div class="shot" data-ui><img src="img/app-medir-graficas.webp" width="780" height="1688" alt="Tabla de control en la app con tu progreso por prueba y la gráfica de antes y ahora" loading="lazy"></div><figcaption><b>Medir</b>10 pruebas en la semana 1 y en la 8. Ves tu mejora en gráficas.</figcaption></figure>
+      <figure data-rise style="--d:160ms"><div class="shot" data-ui><img src="img/app-fisico-silla.webp" width="780" height="1688" alt="Temporizador de la rutina física con el dibujo del ejercicio Las 4 esquinas" loading="lazy"></div><figcaption><b>Físico</b>Rutinas con temporizador y el dibujo de cada ejercicio, de pie o en silla.</figcaption></figure>
+      <figure data-rise style="--d:240ms"><div class="shot" data-ui><img src="img/app-mente-apoyo.webp" width="780" height="1688" alt="Zona mental en la app con el diario del partido y la rutina entre puntos" loading="lazy"></div><figcaption><b>Mente</b>La rutina entre puntos, el diario del partido y mensajes de apoyo.</figcaption></figure>
     </div>
   </section>
 
