@@ -636,7 +636,50 @@ const byName: Record<string, string> = {
   Remates: 'serve',
 }
 
+/** Imágenes 3D del personaje en silla (public/ejercicios). Los ejercicios de cancha siguen con su diagrama. */
+const sillaPhoto: Record<string, string> = {
+  'Core sentado': 'core-sentado',
+  'Plancha (o core equivalente)': 'core-sentado',
+  Arrancadas: 'arrancadas',
+  Desplazamientos: 'desplazamientos',
+  'Giros y frenadas': 'giros-y-frenadas',
+  'Empuje continuo': 'empuje-continuo',
+  'Trabajo continuo suave': 'empuje-continuo',
+  Ochos: 'ochos',
+  Estiramientos: 'estiramientos',
+  Calentamiento: 'calentamiento',
+  'Rotación externa con banda': 'rotacion-externa-banda',
+  'Remo con banda': 'remo-banda',
+  'Y-T-W': 'y-t-w',
+  Leñador: 'lenador',
+  'Rotaciones con balón medicinal': 'lenador',
+  'Lanzamientos de balón medicinal': 'balon-medicinal',
+  'Sombra frente al espejo': 'sombra-golpes',
+  'Sombra de golpes': 'sombra-golpes',
+  'Lanzamiento al aro': 'saque',
+  'Bloque de saques': 'saque',
+  'Segundo saque bajo presión': 'saque',
+  Remates: 'remate',
+  'Voleas contra la pared': 'voleas-pared',
+  'Voleas seguidas contra la pared': 'voleas-pared',
+  'Peloteos largos': 'peloteo',
+  'Peloteo con las 4 fases': 'peloteo',
+  'La regla de la altura': 'peloteo',
+  'Peloteo cruzado de derecha': 'peloteo',
+  'Peloteo cruzado de revés': 'reves',
+  'Empujón de activación con señal': 'empujon-activacion',
+  'Split step con señal': 'empujon-activacion',
+}
+
 export function ExerciseIllustration({ name, mode }: { name: string; mode: Mode }) {
+  const photo = mode === 'silla' ? sillaPhoto[name] : undefined
+  if (photo) {
+    return (
+      <div className="ill-photo">
+        <img src={`/ejercicios/silla-${photo}.webp`} alt={`Cómo hacer: ${name}`} width={720} height={480} loading="lazy" decoding="async" />
+      </div>
+    )
+  }
   const key = byName[name]
   if (!key) return null
   return (

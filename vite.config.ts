@@ -24,7 +24,7 @@ export default defineConfig({
         // Cada versión nueva toma el control sola; sin esto se queda esperando a que se cierren todas las pestañas.
         skipWaiting: true,
         clientsClaim: true,
-        globPatterns: ['**/*.{js,css,html,svg,png,woff2}'],
+        globPatterns: ['**/*.{js,css,html,svg,png,webp,woff2}'],
         // La landing de ventas vive en /landing y no es parte de la app.
         globIgnores: ['landing/**'],
         navigateFallbackDenylist: [/^\/landing/],
